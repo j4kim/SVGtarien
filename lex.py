@@ -1,10 +1,42 @@
 import ply.lex as lex
 
-tokens = (
-	
+reserved_words = (
+	'title',
+	'desc',
+	'pos',
+	'move',
+	'fill',
+	'stroke',
+	'rect',
+	'circle',
+	'line',
+	'ellipse',
+	'text',
+	'while'
 )
 
-literals = '(),='
+tokens = (
+	'NUMBER',
+	'IDENTIFIER',
+) + tuple(map(lambda s:s.upper(),reserved_words))
+
+literals = '(),="'
+
+def t_NUMBER(t):
+	r'\d+(\.\d+)?'
+	try:
+		t.value = float(t.value)    
+	except ValueError:
+		print ("Line %d: Problem while parsing %s!" % (t.lineno,t.value))
+		t.value = 0
+	return t
+
+def t_IDENTIFIER(t):
+	r'[A-Za-z_]\w*'
+	if t.value in reserved_words:
+		t.type = t.value.upper()
+	return t
+		
 	
 def t_newline(t):
 	r'\n+'
