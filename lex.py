@@ -6,7 +6,9 @@ reserved_words = (
 	'pos',
 	'move',
 	'fill',
+	'nofill',
 	'stroke',
+	'nostroke',
 	'rect',
 	'line',
 	'ellipse',
@@ -19,7 +21,7 @@ tokens = (
 	'ADD_OP',
 	'MULT_OP',
 	'IDENTIFIER',
-) + tuple(map(lambda s:s.upper(),reserved_words))
+) + tuple(w.upper() for w in reserved_words)
 
 literals = '(),="'
 
