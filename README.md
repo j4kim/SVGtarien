@@ -1,2 +1,2 @@
 # SVGtarien
-Revolutionnary progamming language to generate SVG files
+Revolutionnary progamming language and compiler to generate SVG files
