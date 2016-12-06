@@ -129,7 +129,7 @@ ellipse(5,12)
 
 ### Loops
 
-Draws 10 circles of radius 40 spaced with 100 pixels
+Draws 10 circles of radius 40, spaced by 100 pixels
 ```
 pos(0, 200)
 $x = 0
