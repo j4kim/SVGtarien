@@ -10,17 +10,17 @@ Input :
 title("Exemple simple de figure SVG")
 desc("Cette figure est constituée d'un rectangle, d'un segment de droite et d'un cercle.")
 
-pos(0, 70)             # set the pointer at x=0, y=70
-fill(green)            # set the fill color state to green
-move(100, 80)          # move the pointer to 100,80
-rect()                 # draw a rectangle width (x1,y1) = the penultimate position and (x2,y2) = the last position
+pos(0, 70)           # set the pointer at x=0, y=70
+fill(green)          # set the fill color state to green
+move(100, 80)        # move the pointer to 100,80
+rect()               # draw a rectangle width (x1,y1) = the penultimate position and (x2,y2) = the last position
 pos(5, 5)
 move(245, 90)
-noFill()               # reset the fill color state
-stroke(red)            # set the stroke color to red
+noFill()             # reset the fill color state
+stroke(red)          # set the stroke color to red
 line()	
 pos(90, 80)
-width(4)               # set the stoke-width attribute to 4 pixels
+width(4)             # set the stoke-width attribute to 4 pixels
 ellipse(50)
 pos(180, 60)
 text("Un texte")
@@ -82,7 +82,7 @@ Shapes are drawn using the currents attrbutes of the program.
 The position and size of the shape you draw is defined by the last positions you set.
 Before calling a shape function, like `rect` or `line`, you need to move the position pointer 2 times.
 
-#### Rectangles
+### Rectangles
 
 Draw a sqare 150px wide starting in x=50, y=100  
 ```
@@ -97,7 +97,7 @@ move(150,150)
 rect()
 ```
 
-#### Lines
+### Lines
 
 Draw à line passing through 3 points
 ```
@@ -114,14 +114,14 @@ movex(50)
 line()
 ```
 
-#### Circles and ellipses
+### Circles and ellipses
 
-Draw a 5px radius circle in x=30, y=60
+Draw a 5px radius circle centered in x=30,y=60
 ```
 pos(30,60)
 ellipse(5)
 ```
-Draw an ellipse
+Draw an ellipse centered in x=30,y=60, width x-radius=5 and y-radius=12
 ```
 pos(30,60)
 ellipse(5,12)
