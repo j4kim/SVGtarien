@@ -8,7 +8,6 @@ reserved_words = (
 	'fill',
 	'stroke',
 	'rect',
-	'circle',
 	'line',
 	'ellipse',
 	'text',
@@ -17,6 +16,8 @@ reserved_words = (
 
 tokens = (
 	'NUMBER',
+	'ADD_OP',
+	'MULT_OP',
 	'IDENTIFIER',
 ) + tuple(map(lambda s:s.upper(),reserved_words))
 
@@ -30,9 +31,18 @@ def t_NUMBER(t):
 		print ("Line %d: Problem while parsing %s!" % (t.lineno,t.value))
 		t.value = 0
 	return t
+	
+def t_ADD_OP(t):
+	r'[+-]'
+	return t
+	
+def t_MUL_OP(t):
+	r'[*/]'
+	return t
+	
 
 def t_IDENTIFIER(t):
-	r'[A-Za-z_]\w*'
+	r'[A-Za-z_$]\w*'
 	if t.value in reserved_words:
 		t.type = t.value.upper()
 	return t
