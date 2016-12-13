@@ -5,9 +5,9 @@ _tabversion = '3.8'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AA72A4B27F4EA33652BC68B3D26FA3D3'
+_lr_signature = '5A56031460ABF1DC551E10DAEA61EF95'
     
-_lr_action_items = {'MOVE':([0,1,2,3,4,],[1,-4,-5,-3,1,]),'NUMBER':([0,1,2,3,4,],[2,-4,-5,-3,2,]),'POS':([0,1,2,3,4,],[3,-4,-5,-3,3,]),'$end':([1,2,3,4,5,6,],[-4,-5,-3,-1,0,-2,]),}
+_lr_action_items = {'(':([2,3,4,],[-8,-9,8,]),')':([8,10,11,12,15,],[9,-10,-6,14,-7,]),'$end':([1,5,6,7,9,14,],[-1,-3,0,-2,-5,-4,]),'MOVE':([0,1,5,9,14,],[3,3,-3,-5,-4,]),'POS':([0,1,5,9,14,],[2,2,-3,-5,-4,]),'NUMBER':([8,13,],[10,10,]),',':([10,11,],[-10,13,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statement':([0,4,],[4,4,]),'programme':([0,4,],[5,6,]),}
+_lr_goto_items = {'statement':([0,1,],[1,1,]),'expression':([8,13,],[11,15,]),'methodName':([0,1,],[4,4,]),'arguments':([8,],[12,]),'method':([0,1,],[5,5,]),'programme':([0,1,],[6,7,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -28,7 +28,12 @@ _lr_productions = [
   ("S' -> programme","S'",1,None,None,None),
   ('programme -> statement','programme',1,'p_programme_statement','parser.py',7),
   ('programme -> statement programme','programme',2,'p_programme_recursive','parser.py',11),
-  ('statement -> POS','statement',1,'p_statement','parser.py',15),
-  ('statement -> MOVE','statement',1,'p_statement','parser.py',16),
-  ('statement -> NUMBER','statement',1,'p_expression_num_or_var','parser.py',20),
+  ('statement -> method','statement',1,'p_statement','parser.py',15),
+  ('method -> methodName ( arguments )','method',4,'p_method_arg','parser.py',19),
+  ('method -> methodName ( )','method',3,'p_method','parser.py',23),
+  ('arguments -> expression','arguments',1,'p_arguments','parser.py',27),
+  ('arguments -> expression , expression','arguments',3,'p_arguments_list','parser.py',31),
+  ('methodName -> POS','methodName',1,'p_methodName','parser.py',35),
+  ('methodName -> MOVE','methodName',1,'p_methodName','parser.py',36),
+  ('expression -> NUMBER','expression',1,'p_expression','parser.py',40),
 ]

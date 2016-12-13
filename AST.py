@@ -72,7 +72,20 @@ class AssignNode(Node):
     
 class PrintNode(Node):
     type = 'print'
-    
+
+class MethodNode(Node):
+    type = 'method'
+
+    def __init__(self, method, children):
+        Node.__init__(self, children)
+        self.method = method
+
+    def __repr__(self):
+        return "method "+ self.method
+
+class ArgumentNode(Node):
+    type='arguments'
+
 class WhileNode(Node):
     type = 'while'
     

@@ -5,19 +5,31 @@ Grammar
 Rule 0     S' -> programme
 Rule 1     programme -> statement
 Rule 2     programme -> statement programme
-Rule 3     statement -> POS
-Rule 4     statement -> MOVE
-Rule 5     statement -> NUMBER
+Rule 3     statement -> method
+Rule 4     method -> methodName ( arguments )
+Rule 5     method -> methodName ( )
+Rule 6     arguments -> expression
+Rule 7     arguments -> expression , expression
+Rule 8     methodName -> POS
+Rule 9     methodName -> MOVE
+Rule 10    expression -> NUMBER
 
 Terminals, with rules where they appear
 
-MOVE                 : 4
-NUMBER               : 5
-POS                  : 3
+(                    : 4 5
+)                    : 4 5
+,                    : 7
+MOVE                 : 9
+NUMBER               : 10
+POS                  : 8
 error                : 
 
 Nonterminals, with rules where they appear
 
+arguments            : 4
+expression           : 6 7 7
+method               : 3
+methodName           : 4 5
 programme            : 2 0
 statement            : 1 2
 
@@ -28,74 +40,153 @@ state 0
     (0) S' -> . programme
     (1) programme -> . statement
     (2) programme -> . statement programme
-    (3) statement -> . POS
-    (4) statement -> . MOVE
-    (5) statement -> . NUMBER
+    (3) statement -> . method
+    (4) method -> . methodName ( arguments )
+    (5) method -> . methodName ( )
+    (8) methodName -> . POS
+    (9) methodName -> . MOVE
 
-    POS             shift and go to state 3
-    MOVE            shift and go to state 1
-    NUMBER          shift and go to state 2
+    POS             shift and go to state 2
+    MOVE            shift and go to state 3
 
-    statement                      shift and go to state 4
-    programme                      shift and go to state 5
+    statement                      shift and go to state 1
+    methodName                     shift and go to state 4
+    method                         shift and go to state 5
+    programme                      shift and go to state 6
 
 state 1
-
-    (4) statement -> MOVE .
-
-    POS             reduce using rule 4 (statement -> MOVE .)
-    MOVE            reduce using rule 4 (statement -> MOVE .)
-    NUMBER          reduce using rule 4 (statement -> MOVE .)
-    $end            reduce using rule 4 (statement -> MOVE .)
-
-
-state 2
-
-    (5) statement -> NUMBER .
-
-    POS             reduce using rule 5 (statement -> NUMBER .)
-    MOVE            reduce using rule 5 (statement -> NUMBER .)
-    NUMBER          reduce using rule 5 (statement -> NUMBER .)
-    $end            reduce using rule 5 (statement -> NUMBER .)
-
-
-state 3
-
-    (3) statement -> POS .
-
-    POS             reduce using rule 3 (statement -> POS .)
-    MOVE            reduce using rule 3 (statement -> POS .)
-    NUMBER          reduce using rule 3 (statement -> POS .)
-    $end            reduce using rule 3 (statement -> POS .)
-
-
-state 4
 
     (1) programme -> statement .
     (2) programme -> statement . programme
     (1) programme -> . statement
     (2) programme -> . statement programme
-    (3) statement -> . POS
-    (4) statement -> . MOVE
-    (5) statement -> . NUMBER
+    (3) statement -> . method
+    (4) method -> . methodName ( arguments )
+    (5) method -> . methodName ( )
+    (8) methodName -> . POS
+    (9) methodName -> . MOVE
 
     $end            reduce using rule 1 (programme -> statement .)
-    POS             shift and go to state 3
-    MOVE            shift and go to state 1
-    NUMBER          shift and go to state 2
+    POS             shift and go to state 2
+    MOVE            shift and go to state 3
 
-    statement                      shift and go to state 4
-    programme                      shift and go to state 6
+    statement                      shift and go to state 1
+    methodName                     shift and go to state 4
+    method                         shift and go to state 5
+    programme                      shift and go to state 7
+
+state 2
+
+    (8) methodName -> POS .
+
+    (               reduce using rule 8 (methodName -> POS .)
+
+
+state 3
+
+    (9) methodName -> MOVE .
+
+    (               reduce using rule 9 (methodName -> MOVE .)
+
+
+state 4
+
+    (4) method -> methodName . ( arguments )
+    (5) method -> methodName . ( )
+
+    (               shift and go to state 8
+
 
 state 5
+
+    (3) statement -> method .
+
+    POS             reduce using rule 3 (statement -> method .)
+    MOVE            reduce using rule 3 (statement -> method .)
+    $end            reduce using rule 3 (statement -> method .)
+
+
+state 6
 
     (0) S' -> programme .
 
 
 
-state 6
+state 7
 
     (2) programme -> statement programme .
 
     $end            reduce using rule 2 (programme -> statement programme .)
+
+
+state 8
+
+    (4) method -> methodName ( . arguments )
+    (5) method -> methodName ( . )
+    (6) arguments -> . expression
+    (7) arguments -> . expression , expression
+    (10) expression -> . NUMBER
+
+    )               shift and go to state 9
+    NUMBER          shift and go to state 10
+
+    arguments                      shift and go to state 12
+    expression                     shift and go to state 11
+
+state 9
+
+    (5) method -> methodName ( ) .
+
+    POS             reduce using rule 5 (method -> methodName ( ) .)
+    MOVE            reduce using rule 5 (method -> methodName ( ) .)
+    $end            reduce using rule 5 (method -> methodName ( ) .)
+
+
+state 10
+
+    (10) expression -> NUMBER .
+
+    )               reduce using rule 10 (expression -> NUMBER .)
+    ,               reduce using rule 10 (expression -> NUMBER .)
+
+
+state 11
+
+    (6) arguments -> expression .
+    (7) arguments -> expression . , expression
+
+    )               reduce using rule 6 (arguments -> expression .)
+    ,               shift and go to state 13
+
+
+state 12
+
+    (4) method -> methodName ( arguments . )
+
+    )               shift and go to state 14
+
+
+state 13
+
+    (7) arguments -> expression , . expression
+    (10) expression -> . NUMBER
+
+    NUMBER          shift and go to state 10
+
+    expression                     shift and go to state 15
+
+state 14
+
+    (4) method -> methodName ( arguments ) .
+
+    POS             reduce using rule 4 (method -> methodName ( arguments ) .)
+    MOVE            reduce using rule 4 (method -> methodName ( arguments ) .)
+    $end            reduce using rule 4 (method -> methodName ( arguments ) .)
+
+
+state 15
+
+    (7) arguments -> expression , expression .
+
+    )               reduce using rule 7 (arguments -> expression , expression .)
 

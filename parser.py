@@ -12,12 +12,32 @@ def p_programme_recursive(p):
     p[0] = AST.ProgramNode([p[1]]+p[2].children)
 
 def p_statement(p):
-    ''' statement : POS
-        | MOVE '''
-    p[0] = AST.TokenNode(p[1])
+    ''' statement : method '''
+    p[0] = p[1]
 
-def p_expression_num_or_var(p):
-    '''statement : NUMBER '''
+def p_method_arg(p):
+    ''' method : methodName '(' arguments  ')' '''
+    p[0] = AST.MethodNode(p[1], [p[3]])
+
+def p_method(p):
+    ''' method : methodName '(' ')' '''
+    p[0] = AST.MethodNode(p[1],[])
+
+def p_arguments(p):
+    ''' arguments : expression '''
+    p[0] = AST.ArgumentNode(p[1])
+
+def p_arguments_list(p):
+    ''' arguments : expression ',' expression '''
+    p[0] = AST.ArgumentNode([p[1],p[3]])
+
+def p_methodName(p):
+    ''' methodName : POS
+        | MOVE '''
+    p[0] = p[1]
+
+def p_expression(p):
+    '''expression : NUMBER '''
     p[0] = AST.TokenNode(p[1])
 
 def p_error(p):
@@ -49,7 +69,6 @@ if __name__ == "__main__":
         filename = "test.txt"
 
     prog = open(filename).read()
-    result = "coucou"
     result = yacc.parse(prog)
 
     if result:
