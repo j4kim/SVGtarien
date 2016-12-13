@@ -1,13 +1,6 @@
-pos(0,70)
-move(100,80)
-rect()
-fill("green")
-desc("Ceci est une description")
-text("Un texte")
-title("Exemple simple SVG")
-line()
-ellipse(12,12)
-pos(-2,12)
-$x
-test
-pos(9,10)fill("green")
+pos
+
+
+
+move
+pos

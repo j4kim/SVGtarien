@@ -1,0 +1,101 @@
+Created by PLY version 3.9 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> programme
+Rule 1     programme -> statement
+Rule 2     programme -> statement programme
+Rule 3     statement -> POS
+Rule 4     statement -> MOVE
+Rule 5     statement -> NUMBER
+
+Terminals, with rules where they appear
+
+MOVE                 : 4
+NUMBER               : 5
+POS                  : 3
+error                : 
+
+Nonterminals, with rules where they appear
+
+programme            : 2 0
+statement            : 1 2
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . programme
+    (1) programme -> . statement
+    (2) programme -> . statement programme
+    (3) statement -> . POS
+    (4) statement -> . MOVE
+    (5) statement -> . NUMBER
+
+    POS             shift and go to state 3
+    MOVE            shift and go to state 1
+    NUMBER          shift and go to state 2
+
+    statement                      shift and go to state 4
+    programme                      shift and go to state 5
+
+state 1
+
+    (4) statement -> MOVE .
+
+    POS             reduce using rule 4 (statement -> MOVE .)
+    MOVE            reduce using rule 4 (statement -> MOVE .)
+    NUMBER          reduce using rule 4 (statement -> MOVE .)
+    $end            reduce using rule 4 (statement -> MOVE .)
+
+
+state 2
+
+    (5) statement -> NUMBER .
+
+    POS             reduce using rule 5 (statement -> NUMBER .)
+    MOVE            reduce using rule 5 (statement -> NUMBER .)
+    NUMBER          reduce using rule 5 (statement -> NUMBER .)
+    $end            reduce using rule 5 (statement -> NUMBER .)
+
+
+state 3
+
+    (3) statement -> POS .
+
+    POS             reduce using rule 3 (statement -> POS .)
+    MOVE            reduce using rule 3 (statement -> POS .)
+    NUMBER          reduce using rule 3 (statement -> POS .)
+    $end            reduce using rule 3 (statement -> POS .)
+
+
+state 4
+
+    (1) programme -> statement .
+    (2) programme -> statement . programme
+    (1) programme -> . statement
+    (2) programme -> . statement programme
+    (3) statement -> . POS
+    (4) statement -> . MOVE
+    (5) statement -> . NUMBER
+
+    $end            reduce using rule 1 (programme -> statement .)
+    POS             shift and go to state 3
+    MOVE            shift and go to state 1
+    NUMBER          shift and go to state 2
+
+    statement                      shift and go to state 4
+    programme                      shift and go to state 6
+
+state 5
+
+    (0) S' -> programme .
+
+
+
+state 6
+
+    (2) programme -> statement programme .
+
+    $end            reduce using rule 2 (programme -> statement programme .)
+
