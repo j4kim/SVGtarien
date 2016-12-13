@@ -3,18 +3,24 @@ from AST import addToClass
 from functools import reduce
 
 svg=""
-x=y=0
+x=[0,0]
+y=[0,0]
 
 def rect():
-    append('    <rect width="300" height="100" x="{}" y="{}" fill="yellow"/>'.format(x,y))
+    rx = x[-2]
+    ry = y[-2]
+    w = x[-1] - rx
+    h = y[-1] - ry
+    append('    <rect x="{}" y="{}" width="{}" height="{}" fill="yellow"/>'.format(rx,ry,w,h))
 
-def ellipse():
-    append('    <circle cx="{}" cy="{}" r="40" stroke="black" stroke-width="3" fill="red" />'.format(x,y))
+def ellipse(args):
+    r=args[0].tok
+    append('    <circle cx="{}" cy="{}" r="{}" stroke="black" stroke-width="3" fill="red" />'.format(x[-1],y[-1],r))
 
 def pos(args):
     global x,y
-    x = args[0].tok
-    y = args[1].tok
+    x.append(args[0].tok)
+    y.append(args[1].tok)
 
 def append(str):
     global svg
