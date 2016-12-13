@@ -10,3 +10,4 @@ ellipse(12,12)
 pos(-2,12)
 $x
 test
+pos(9,10)fill("green")

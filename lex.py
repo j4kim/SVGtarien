@@ -22,6 +22,7 @@ tokens = (
 	'MULT_OP',
 	'STRING',
 	'VARIABLE',
+	'RESERVEDWORDS',
 ) + tuple(w.upper() for w in reserved_words)
 
 literals = '(),='
