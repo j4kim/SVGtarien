@@ -1,3 +1,2 @@
-pos()
-move( 3 )
-pos(12,24)
+rect()
+ellipse()

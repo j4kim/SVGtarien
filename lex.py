@@ -3,26 +3,27 @@ import ply.lex as lex
 reserved_words = (
     'pos',
     'move',
-    # 'title',
-    # 'desc',
-    # 'fill',
-    # 'nofill',
-    # 'stroke',
-    # 'nostroke',
-    # 'rect',
-    # 'line',
-    # 'ellipse',
-    # 'text',
-    # 'while'
+    'title',
+    'desc',
+    'fill',
+    'nofill',
+    'stroke',
+    'nostroke',
+    'rect',
+    'line',
+    'ellipse',
+    'text',
+    'while'
 )
 
 tokens = (
+    'RESERVEDWORDS',
      'NUMBER',
      # 'ADD_OP',
      # 'MULT_OP',
      # 'STRING',
      # 'VARIABLE',
- ) + tuple(w.upper() for w in reserved_words)
+ )# + tuple(w.upper() for w in reserved_words)
 
 literals = '(),='
 
@@ -60,7 +61,7 @@ def t_STRING(t):
 def t_RESERVEDWORDS(t):
     r'[A-Za-z_]\w*'
     if t.value in reserved_words:
-        t.type = t.value.upper()
+        #t.type = t.value.upper()
         return t
     print("Erreur lexicale: Le mot {} n'est pas connu".format(t.value))
 

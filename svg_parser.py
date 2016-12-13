@@ -21,7 +21,7 @@ def p_method_arg(p):
 
 def p_method(p):
     ''' method : methodName '(' ')' '''
-    p[0] = AST.MethodNode(p[1],[])
+    p[0] = AST.MethodNode(p[1])
 
 def p_arguments(p):
     ''' arguments : expression '''
@@ -32,8 +32,7 @@ def p_arguments_list(p):
     p[0] = AST.ArgumentNode([p[1],p[3]])
 
 def p_methodName(p):
-    ''' methodName : POS
-        | MOVE '''
+    ''' methodName : RESERVEDWORDS'''
     p[0] = p[1]
 
 def p_expression(p):

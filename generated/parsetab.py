@@ -5,9 +5,9 @@ _tabversion = '3.8'
 
 _lr_method = 'LALR'
 
-_lr_signature = '5A56031460ABF1DC551E10DAEA61EF95'
+_lr_signature = '28EC44531F102129E6D9E87DCCA275AE'
     
-_lr_action_items = {'(':([2,3,4,],[-8,-9,8,]),')':([8,10,11,12,15,],[9,-10,-6,14,-7,]),'$end':([1,5,6,7,9,14,],[-1,-3,0,-2,-5,-4,]),'MOVE':([0,1,5,9,14,],[3,3,-3,-5,-4,]),'POS':([0,1,5,9,14,],[2,2,-3,-5,-4,]),'NUMBER':([8,13,],[10,10,]),',':([10,11,],[-10,13,]),}
+_lr_action_items = {'$end':([1,3,4,6,9,13,],[0,-3,-1,-2,-5,-4,]),')':([7,8,10,11,14,],[9,-6,-9,13,-7,]),'RESERVEDWORDS':([0,3,4,9,13,],[2,-3,2,-5,-4,]),'NUMBER':([7,12,],[10,10,]),'(':([2,5,],[-8,7,]),',':([8,10,],[12,-9,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statement':([0,1,],[1,1,]),'expression':([8,13,],[11,15,]),'methodName':([0,1,],[4,4,]),'arguments':([8,],[12,]),'method':([0,1,],[5,5,]),'programme':([0,1,],[6,7,]),}
+_lr_goto_items = {'programme':([0,4,],[1,6,]),'expression':([7,12,],[8,14,]),'method':([0,4,],[3,3,]),'statement':([0,4,],[4,4,]),'methodName':([0,4,],[5,5,]),'arguments':([7,],[11,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,14 +26,13 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> programme","S'",1,None,None,None),
-  ('programme -> statement','programme',1,'p_programme_statement','parser.py',7),
-  ('programme -> statement programme','programme',2,'p_programme_recursive','parser.py',11),
-  ('statement -> method','statement',1,'p_statement','parser.py',15),
-  ('method -> methodName ( arguments )','method',4,'p_method_arg','parser.py',19),
-  ('method -> methodName ( )','method',3,'p_method','parser.py',23),
-  ('arguments -> expression','arguments',1,'p_arguments','parser.py',27),
-  ('arguments -> expression , expression','arguments',3,'p_arguments_list','parser.py',31),
-  ('methodName -> POS','methodName',1,'p_methodName','parser.py',35),
-  ('methodName -> MOVE','methodName',1,'p_methodName','parser.py',36),
-  ('expression -> NUMBER','expression',1,'p_expression','parser.py',40),
+  ('programme -> statement','programme',1,'p_programme_statement','svg_parser.py',7),
+  ('programme -> statement programme','programme',2,'p_programme_recursive','svg_parser.py',11),
+  ('statement -> method','statement',1,'p_statement','svg_parser.py',15),
+  ('method -> methodName ( arguments )','method',4,'p_method_arg','svg_parser.py',19),
+  ('method -> methodName ( )','method',3,'p_method','svg_parser.py',23),
+  ('arguments -> expression','arguments',1,'p_arguments','svg_parser.py',27),
+  ('arguments -> expression , expression','arguments',3,'p_arguments_list','svg_parser.py',31),
+  ('methodName -> RESERVEDWORDS','methodName',1,'p_methodName','svg_parser.py',35),
+  ('expression -> NUMBER','expression',1,'p_expression','svg_parser.py',39),
 ]

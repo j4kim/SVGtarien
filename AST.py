@@ -76,7 +76,7 @@ class PrintNode(Node):
 class MethodNode(Node):
     type = 'method'
 
-    def __init__(self, method, children):
+    def __init__(self, method, children=[]):
         Node.__init__(self, children)
         self.method = method
 
