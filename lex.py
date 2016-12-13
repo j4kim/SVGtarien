@@ -56,8 +56,7 @@ def t_RESERVEDWORDS(t):
 	if t.value in reserved_words:
 		t.type = t.value.upper()
 		return t
-	else:
-		print("Erreur lexicale: Le mot {} n'est pas connu".format(t.value))
+	print("Erreur lexicale: Le mot {} n'est pas connu".format(t.value))
 	
 	
 def t_newline(t):
