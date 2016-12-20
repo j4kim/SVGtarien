@@ -1,30 +1,37 @@
 import AST
 from AST import addToClass
 from functools import reduce
+from options import Options
 
 svg=""
 x=[0,0]
 y=[0,0]
+options = Options()
 
 def rect():
     rx = x[-2]
     ry = y[-2]
     w = x[-1] - rx
     h = y[-1] - ry
-    append('    <rect x="{}" y="{}" width="{}" height="{}" fill="yellow"/>'.format(rx,ry,w,h))
+    append('    <rect x="{}" y="{}" width="{}" height="{}" {} />'.format(rx,ry,w,h, options))
 
 def ellipse(args):
     r=args[0].tok
-    append('    <circle cx="{}" cy="{}" r="{}" stroke="black" stroke-width="3" fill="red" />'.format(x[-1],y[-1],r))
+    append('    <circle cx="{}" cy="{}" r="{}" {} />'.format(x[-1],y[-1],r, options))
 
 def pos(args):
-    global x,y
     x.append(args[0].tok)
     y.append(args[1].tok)
 
 def append(str):
-    global svg
+    global svg, options, x, y
     svg += str + '\n'
+
+def fill(arg):
+    options.add("fill", arg[0].tok)
+
+def stroke(arg):
+    options.add("stroke", arg[0].tok)
 
 
 @addToClass(AST.ProgramNode)
