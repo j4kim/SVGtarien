@@ -29,6 +29,11 @@ def pos(args):
     x.append(args[0].tok)
     y.append(args[1].tok)
 
+def move(args):
+	x.append(x[-1]+args[0].tok)
+	y.append(y[-1]+args[1].tok)
+
+
 def append(str):
     global svg, options, x, y
     svg += str + '\n'
