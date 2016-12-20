@@ -4,9 +4,10 @@ from functools import reduce
 from options import Options
 
 svg=""
-x=[0,0]
-y=[0,0]
+x=[]
+y=[]
 options = Options()
+w=h=0
 
 def title(args):
 	write('    <title>{}</title>'.format(args[0].tok))
@@ -29,13 +30,18 @@ def ellipse(args):
 # move cursor
 #
 
+def updatePos(nx, ny):
+    global w, h
+    x.append(nx)
+    y.append(ny)
+    if nx > w : w = nx
+    if nx > h : h = nx
+
 def pos(args):
-    x.append(args[0].tok)
-    y.append(args[1].tok)
+    updatePos(args[0].tok, args[1].tok)
 
 def move(args):
-	x.append(x[-1]+args[0].tok)
-	y.append(y[-1]+args[1].tok)
+    updatePos(x[-1]+args[0].tok, y[-1]+args[1].tok)
 
 #
 # Change color/stroke options
@@ -62,7 +68,7 @@ def nostroke():
 #
 
 def write(str):
-    global svg, options, x, y
+    global svg, x, y, options
     svg += str + '\n'
 
 #
