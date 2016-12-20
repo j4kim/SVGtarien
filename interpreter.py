@@ -4,8 +4,8 @@ from functools import reduce
 from options import Options
 
 svg=""
-x=[0,0]
-y=[0,0]
+x=[]
+y=[]
 options = Options()
 
 def title(args):
@@ -25,6 +25,20 @@ def ellipse(args):
     r=args[0].tok
     append('    <circle cx="{}" cy="{}" r="{}" {}/>'.format(x[-1],y[-1],r, options))
 
+def line(*args):
+	list_point = ""
+	if args: # If args is not empty.
+		if args[0][0].tok > 1:
+			for i in range(int(args[0][0].tok)):
+				list_point += (str(x[-i-1]) + "," + str(y[-i-1])+ " ")
+		else:
+			list_point += (str(x[-2])+","+str(y[-2])+" "+str(x[-1])+","+str(y[-1]))
+			
+	else:
+		for i in range(len(x)):
+			list_point += (str(x[-i-1]) + "," + str(y[-i-1])+ " ")
+	append('    <polyline points="{}" {}/>'.format(list_point, options))		
+	
 def pos(args):
     x.append(args[0].tok)
     y.append(args[1].tok)
@@ -32,7 +46,6 @@ def pos(args):
 def move(args):
 	x.append(x[-1]+args[0].tok)
 	y.append(y[-1]+args[1].tok)
-
 
 def append(str):
     global svg, options, x, y
