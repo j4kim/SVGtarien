@@ -25,9 +25,6 @@ def ellipse(args):
     r=args[0].tok
     write('    <circle cx="{}" cy="{}" r="{}" {}/>'.format(x[-1], y[-1], r, options))
 
-#
-# move cursor
-#
 
 def line(*args):
 	list_point = ""
@@ -42,6 +39,10 @@ def line(*args):
 		for i in range(len(x)):
 			list_point += (str(x[-i-1]) + "," + str(y[-i-1])+ " ")
 	append('    <polyline points="{}" {}/>'.format(list_point, options))		
+	
+#
+# move cursor
+#
 	
 def pos(args):
     x.append(args[0].tok)
