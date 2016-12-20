@@ -3,6 +3,7 @@ import ply.lex as lex
 reserved_words = (
     'pos',
     'move',
+    'clean',
     'title',
     'desc',
     'fill',

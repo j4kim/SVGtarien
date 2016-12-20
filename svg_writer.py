@@ -65,6 +65,10 @@ class SvgWriter:
     def move(self, args):
         self.updatePos(self.x[-1] + args[0].tok, self.y[-1] + args[1].tok)
 
+    def clean(self):
+        self.x = []
+        self.y = []
+
     #
     # Change color/stroke options
     #
