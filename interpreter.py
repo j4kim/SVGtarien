@@ -25,9 +25,17 @@ def ellipse(args):
     r=args[0].tok
     write('    <circle cx="{}" cy="{}" r="{}" {}/>'.format(x[-1], y[-1], r, options))
 
+#
+# move cursor
+#
+
 def pos(args):
     x.append(args[0].tok)
     y.append(args[1].tok)
+
+def move(args):
+	x.append(x[-1]+args[0].tok)
+	y.append(y[-1]+args[1].tok)
 
 #
 # Change color/stroke options
