@@ -9,6 +9,7 @@ reserved_words = (
     'nofill',
     'stroke',
     'nostroke',
+    'width',
     'rect',
     'line',
     'ellipse',

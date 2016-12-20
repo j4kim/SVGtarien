@@ -15,13 +15,13 @@ def p_statement(p):
     ''' statement : method '''
     p[0] = p[1]
 
-def p_method_arg(p):
-    ''' method : methodName '(' arguments  ')' '''
-    p[0] = AST.MethodNode(p[1], [p[3]])
-
 def p_method(p):
     ''' method : methodName '(' ')' '''
     p[0] = AST.MethodNode(p[1])
+
+def p_method_arg(p):
+    ''' method : methodName '(' arguments ')' '''
+    p[0] = AST.MethodNode(p[1], [p[3]])
 
 def p_arguments(p):
     ''' arguments : expression '''
