@@ -38,6 +38,10 @@ def p_methodName(p):
 def p_expression(p):
     '''expression : NUMBER '''
     p[0] = AST.TokenNode(p[1])
+	
+def p_expression_string(p):
+    '''expression : STRING '''
+    p[0] = AST.TokenNode(p[1])
 
 def p_error(p):
     if p:

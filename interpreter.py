@@ -6,6 +6,11 @@ svg=""
 x=[0,0]
 y=[0,0]
 
+def title(args):
+	r=args[0].tok
+	append('    <title>{}</title>'.format(r[1:-1]))
+
+
 def rect():
     rx = x[-2]
     ry = y[-2]

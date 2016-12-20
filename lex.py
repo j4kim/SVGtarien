@@ -19,6 +19,7 @@ reserved_words = (
 tokens = (
     'RESERVEDWORDS',
      'NUMBER',
+	 'STRING',
      # 'ADD_OP',
      # 'MULT_OP',
      # 'STRING',
