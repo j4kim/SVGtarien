@@ -10,6 +10,9 @@ def title(args):
 	r=args[0].tok
 	append('    <title>{}</title>'.format(r[1:-1]))
 
+def desc(args):
+	r=args[0].tok
+	append('    <desc>{}</desc>'.format(r[1:-1]))
 
 def rect():
     rx = x[-2]
