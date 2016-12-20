@@ -9,23 +9,21 @@ y=[0,0]
 options = Options()
 
 def title(args):
-	r=args[0].tok
-	append('    <title>{}</title>'.format(r[1:-1]))
+	append('    <title>{}</title>'.format(args[0].tok))
 
 def desc(args):
-	r=args[0].tok
-	append('    <desc>{}</desc>'.format(r[1:-1]))
+	append('    <desc>{}</desc>'.format(args[0].tok))
 
 def rect():
     rx = x[-2]
     ry = y[-2]
     w = x[-1] - rx
     h = y[-1] - ry
-    append('    <rect x="{}" y="{}" width="{}" height="{}" {} />'.format(rx,ry,w,h, options))
+    append('    <rect x="{}" y="{}" width="{}" height="{}" {}/>'.format(rx,ry,w,h, options))
 
 def ellipse(args):
     r=args[0].tok
-    append('    <circle cx="{}" cy="{}" r="{}" {} />'.format(x[-1],y[-1],r, options))
+    append('    <circle cx="{}" cy="{}" r="{}" {}/>'.format(x[-1],y[-1],r, options))
 
 def pos(args):
     x.append(args[0].tok)

@@ -36,13 +36,12 @@ def p_methodName(p):
     p[0] = p[1]
 
 def p_expression(p):
-    '''expression : NUMBER
-    | STRING'''
+    '''expression : NUMBER'''
     p[0] = AST.TokenNode(p[1])
 	
 def p_expression_string(p):
     '''expression : STRING '''
-    p[0] = AST.TokenNode(p[1])
+    p[0] = AST.TokenNode(p[1][1:-1]) # [1:-1] enlève les guillemets de la string
 
 def p_error(p):
     if p:

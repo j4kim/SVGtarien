@@ -9,5 +9,5 @@ class Options:
     def __repr__(self):
         str=''
         for key, value in self.options.items():
-            str+='{}={} '.format(key,value)
+            str+='{}="{}" '.format(key,value)
         return str
