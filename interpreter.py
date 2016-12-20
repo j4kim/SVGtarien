@@ -13,6 +13,9 @@ def title(args):
 
 def desc(args):
 	write('    <desc>{}</desc>'.format(args[0].tok))
+	
+def text(args):
+	write('    <text x="{}" y="{}">{}</text>'.format(x[-1], y[-1],args[0].tok))
 
 def rect():
     rx = x[-2]
@@ -38,7 +41,7 @@ def line(*args):
 	else:
 		for i in range(len(x)):
 			list_point += (str(x[-i-1]) + "," + str(y[-i-1])+ " ")
-	append('    <polyline points="{}" {}/>'.format(list_point, options))		
+	write('    <polyline points="{}" {}/>'.format(list_point, options))		
 	
 #
 # move cursor
