@@ -15,7 +15,7 @@ def desc(args):
 	write('    <desc>{}</desc>'.format(args[0].tok))
 	
 def text(args):
-	write('    <text x="{}" y="{}">{}</text>'.format(x[-1], y[-1],args[0].tok))
+	write('    <text x="{}" y="{} {}">{}</text>'.format(x[-1], y[-1],options,args[0].tok))
 
 def rect():
     rx = x[-2]
