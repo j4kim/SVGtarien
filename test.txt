@@ -1,25 +1,14 @@
 title("Ceci est le titre")
 desc("Ceci est la description de notre compilateur")
-pos(0,0)
-move(60,60)
-rect()
-pos(110,110)
-rect()
-fill("red")
-pos(150,150)
-rect()
-pos(180,180)
-rect()
-stroke("yellow")
-pos(200,200)
-rect()
-pos(210,210)
-rect()
-pos(230,230)
-ellipse(20)
-line()
-text("Ceci est un texte")
-clean()
-pos(20,400)
-move(50,50)
+
+stroke("black")
+fill("none")
+
+$a = 5
+
+pos(10,20)
+
+
+pos(500,500)
+
 line()

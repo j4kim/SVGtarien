@@ -1,118 +1,40 @@
 import AST
 from AST import addToClass
-from functools import reduce
-from options import Options
+from svg_writer import SvgWriter
 
-svg=""
-x=[]
-y=[]
-options = Options()
-
-def title(args):
-	write('    <title>{}</title>'.format(args[0].tok))
-
-def desc(args):
-	write('    <desc>{}</desc>'.format(args[0].tok))
-	
-def text(args):
-	write('    <text x="{}" y="{}" {}>{}</text>'.format(x[-1], y[-1],options,args[0].tok))
-
-def rect():
-    rx = x[-2]
-    ry = y[-2]
-    w = x[-1] - rx
-    h = y[-1] - ry
-    write('    <rect x="{}" y="{}" width="{}" height="{}" {}/>'.format(rx, ry, w, h, options))
-
-def ellipse(args):
-    r=args[0].tok
-    write('    <circle cx="{}" cy="{}" r="{}" {}/>'.format(x[-1], y[-1], r, options))
-
-
-def line(*args):
-	list_point = ""
-	if args: # If args is not empty.
-		if args[0][0].tok > 1:
-			for i in range(int(args[0][0].tok)):
-				list_point += (str(x[-i-1]) + "," + str(y[-i-1])+ " ")
-		else:
-			list_point += (str(x[-2])+","+str(y[-2])+" "+str(x[-1])+","+str(y[-1]))
-			
-	else:
-		for i in range(len(x)):
-			list_point += (str(x[-i-1]) + "," + str(y[-i-1])+ " ")
-	write('    <polyline points="{}" {}/>'.format(list_point, options))		
-	
-#
-# move cursor
-#
-	
-def pos(args):
-    x.append(args[0].tok)
-    y.append(args[1].tok)
-
-def move(args):
-	x.append(x[-1]+args[0].tok)
-	y.append(y[-1]+args[1].tok)
-
-
-#
-# Change color/stroke options
-#
-
-def fill(arg):
-    options.add("fill", arg[0].tok)
-
-def stroke(arg):
-    options.add("stroke", arg[0].tok)
-
-def width(arg):
-    options.add("stroke-width", arg[0].tok)
-
-def nofill():
-    options.remove("fill")
-
-def nostroke():
-    options.remove("stroke")
-    options.remove("stroke-width")
-
-#
-# Clean the lists x and y
-#
-
-def clean():
-	x = []
-	y = []
-
-	
-#
-# Write a new line in svg
-#
-
-def write(str):
-    global svg, options, x, y
-    svg += str + '\n'
 
 #
 # AST
 #
 
 @addToClass(AST.ProgramNode)
-def execute(self):
-    write('<?xml version="1.0" encoding="utf-8"?>')
-    write('<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="800" height="800">')
+def execute(self, writer):
     for c in self.children:
-        c.execute()
-    write('</svg>')
+        c.execute(writer)
+    writer.finish()
 
 
 @addToClass(AST.MethodNode)
-def execute(self):
+def execute(self, writer):
+    methodToCall = getattr(writer, self.method)
     if self.children:
         # gloabals() retourne un dictionnaire sur les fonctions globales https://docs.python.org/3/library/functions.html#globals
-        globals()[self.method](self.children[0].children) # children[0] contient le ArgumentNode
+        methodToCall(self.children[0].children) # children[0] contient le ArgumentNode
     else:
-        globals()[self.method]()
+        methodToCall()
+
+@addToClass(AST.AssignNode)
+def execute(self):
+    vars[self.children[0].tok] = self.children[1].execute()		
+
+@addToClass(AST.TokenNode)
+def execute(self):
+    if isinstance(self.tok, str):
+        try:
+            return vars[self.tok]
+        except KeyError:
+            print ("*** Error: variable %s undefined!" % self.tok)
+    return self.tok
 
 #
 # Main
@@ -134,7 +56,8 @@ if __name__ == "__main__":
         sys.exit()
 
     ast = parse(prog)
-    ast.execute()
+    writer = SvgWriter()
+    ast.execute(writer)
 
     with open('output.svg', 'w') as f:
-        f.write(svg)
+        f.write(writer.svg)

@@ -12,7 +12,8 @@ def p_programme_recursive(p):
     p[0] = AST.ProgramNode([p[1]]+p[2].children)
 
 def p_statement(p):
-    ''' statement : method '''
+    ''' statement : method 
+		| assignation '''
     p[0] = p[1]
 
 def p_method(p):
@@ -36,13 +37,22 @@ def p_methodName(p):
     p[0] = p[1]
 
 def p_expression(p):
-    '''expression : NUMBER'''
+    '''expression : NUMBER
+		| VARIABLE'''
     p[0] = AST.TokenNode(p[1])
 	
 def p_expression_string(p):
     '''expression : STRING '''
     p[0] = AST.TokenNode(p[1][1:-1]) # [1:-1] enlève les guillemets de la string
 
+def p_assign(p):
+    ''' assignation : VARIABLE '=' expression '''
+    p[0] = AST.AssignNode([AST.TokenNode(p[1]),p[3]])
+
+def p_assign_arguments(p):
+	''' expression : assignation '''
+	p[0]=p[1]
+	
 def p_error(p):
     if p:
         print ("Syntax error in line %d" % p.lineno)
@@ -50,13 +60,13 @@ def p_error(p):
     else:
         print ("Sytax error: unexpected end of file!")
 
-'''
-precedence = (
+
+'''precedence = (
     ('left', 'ADD_OP'),
     ('left', 'MUL_OP'),
     ('right', 'UMINUS'),
-)
-'''
+)'''
+
 
 def parse(program):
     return yacc.parse(program)

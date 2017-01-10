@@ -3,6 +3,7 @@ import ply.lex as lex
 reserved_words = (
     'pos',
     'move',
+    'clean',
     'title',
     'desc',
     'fill',
@@ -22,9 +23,9 @@ tokens = (
     'RESERVEDWORDS',
      'NUMBER',
 	 'STRING',
-     # 'ADD_OP',
-     # 'MULT_OP',
-     # 'VARIABLE',
+     #'ADD_OP',
+     #'MULT_OP',
+     'VARIABLE',
  )# + tuple(w.upper() for w in reserved_words)
 
 literals = '(),='
