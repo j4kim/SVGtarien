@@ -1,13 +1,10 @@
 title("Ceci est le titre")
 desc("Ceci est la description de notre compilateur")
 
-pos(500,500)
-pos(0,0)
-clean()
-
-pos(50,50)
-move(100,50)
-move(50,100)
+pos(100,100)
+move(20,30)
+move(30,20)
+move(-20,20)
 
 stroke("black")
 fill("none")

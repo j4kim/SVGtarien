@@ -22,8 +22,8 @@ tokens = (
     'RESERVEDWORDS',
      'NUMBER',
 	 'STRING',
-     # 'ADD_OP',
-     # 'MULT_OP',
+     'ADD_OP',
+     'MUL_OP'
      # 'VARIABLE',
  )# + tuple(w.upper() for w in reserved_words)
 

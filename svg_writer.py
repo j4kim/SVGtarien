@@ -10,13 +10,13 @@ class SvgWriter:
         self.w = self.h = 0
 
     def title(self, args):
-        self.write('    <title>{}</title>'.format(args[0].tok))
+        self.write('    <title>{}</title>'.format(args[0]))
 
     def desc(self, args):
-        self.write('    <desc>{}</desc>'.format(args[0].tok))
+        self.write('    <desc>{}</desc>'.format(args[0]))
 
     def text(self, args):
-        self.write('    <text x="{}" y="{}" {}>{}</text>'.format(self.x[-1], self.y[-1], self.options, args[0].tok))
+        self.write('    <text x="{}" y="{}" {}>{}</text>'.format(self.x[-1], self.y[-1], self.options, args[0]))
 
     def rect(self):
         x1, x2 = self.x[-2], self.x[-1]
@@ -29,7 +29,7 @@ class SvgWriter:
         self.write('    <rect x="{}" y="{}" width="{}" height="{}" {}/>'.format(x1, y1, w, h, self.options))
 
     def ellipse(self, args):
-        r = args[0].tok
+        r = args[0]
         self.write('    <circle cx="{}" cy="{}" r="{}" {}/>'.format(self.x[-1], self.y[-1], r, self.options))
 
     def line(self, *args):
@@ -37,8 +37,8 @@ class SvgWriter:
         x = self.x
         y = self.y
         if args:  # If args is not empty.
-            if args[0][0].tok > 1:
-                for i in range(int(args[0][0].tok)):
+            if args[0][0] > 1:
+                for i in range(int(args[0][0])):
                     list_point += (str(x[-i - 1]) + "," + str(y[-i - 1]) + " ")
             else:
                 list_point += (str(x[-2]) + "," + str(y[-2]) + " " + str(x[-1]) + "," + str(y[-1]))
@@ -60,10 +60,10 @@ class SvgWriter:
         if y > self.h: self.h = y
 
     def pos(self, args):
-        self.updatePos(args[0].tok, args[1].tok)
+        self.updatePos(args[0], args[1])
 
     def move(self, args):
-        self.updatePos(self.x[-1] + args[0].tok, self.y[-1] + args[1].tok)
+        self.updatePos(self.x[-1] + args[0], self.y[-1] + args[1])
 
     def clean(self):
         self.x = []
@@ -74,13 +74,13 @@ class SvgWriter:
     #
 
     def fill(self, arg):
-        self.options.add("fill", arg[0].tok)
+        self.options.add("fill", arg[0])
 
     def stroke(self, arg):
-        self.options.add("stroke", arg[0].tok)
+        self.options.add("stroke", arg[0])
 
     def width(self, arg):
-        self.options.add("stroke-width", arg[0].tok)
+        self.options.add("stroke-width", arg[0])
 
     def nofill(self):
         self.options.remove("fill")
