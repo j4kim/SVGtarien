@@ -1,16 +1,4 @@
-# coding: latin-1
-
-''' Petit module utilitaire pour la construction, la manipulation et la 
-représentation d'arbres syntaxiques abstraits.
-
-Sûrement plein de bugs et autres surprises. À prendre comme un 
-"work in progress"...
-Notamment, l'utilisation de pydot pour représenter un arbre syntaxique cousu
-est une utilisation un peu "limite" de graphviz. Ça marche, mais le layout n'est
-pas toujours optimal...
-'''
-
-class Node:
+ï»¿class Node:
     count = 0
     type = 'Node (unspecified)'
     shape = 'ellipse'
@@ -93,18 +81,21 @@ class EntryNode(Node):
     type = 'ENTRY'
     def __init__(self):
         Node.__init__(self, None)
+
+class VariableNode(TokenNode):
+	type = 'variable'
     
 def addToClass(cls):
-    ''' Décorateur permettant d'ajouter la fonction décorée en tant que méthode
-    à une classe.
+    ''' DÃ©corateur permettant d'ajouter la fonction dÃ©corÃ©e en tant que mÃ©thode
+    Ã  une classe.
     
-    Permet d'implémenter une forme élémentaire de programmation orientée
-    aspects en regroupant les méthodes de différentes classes implémentant
-    une même fonctionnalité en un seul endroit.
+    Permet d'implÃ©menter une forme Ã©lÃ©mentaire de programmation orientÃ©e
+    aspects en regroupant les mÃ©thodes de diffÃ©rentes classes implÃ©mentant
+    une mÃªme fonctionnalitÃ© en un seul endroit.
     
-    Attention, après utilisation de ce décorateur, la fonction décorée reste dans
-    le namespace courant. Si cela dérange, on peut utiliser del pour la détruire.
-    Je ne sais pas s'il existe un moyen d'éviter ce phénomène.
+    Attention, aprÃ¨s utilisation de ce dÃ©corateur, la fonction dÃ©corÃ©e reste dans
+    le namespace courant. Si cela dÃ©range, on peut utiliser del pour la dÃ©truire.
+    Je ne sais pas s'il existe un moyen d'Ã©viter ce phÃ©nomÃ¨ne.
     '''
     def decorator(func):
         setattr(cls,func.__name__,func)

@@ -1,6 +1,15 @@
 import AST
 from AST import addToClass
-from svg_writer import SvgWriter
+from functools import reduce
+
+operations = {
+    '+': lambda x, y: x + y,
+    '-': lambda x, y: x - y,
+    '*': lambda x, y: x * y,
+    '/': lambda x, y: x / y,
+}
+vars = {}
+
 
 
 #
@@ -10,31 +19,56 @@ from svg_writer import SvgWriter
 @addToClass(AST.ProgramNode)
 def execute(self, writer):
     for c in self.children:
-        c.execute(writer)
+        if isinstance(c, AST.MethodNode):
+            c.execute(writer)
+        else : 
+            c.execute()
     writer.finish()
 
 
+@addToClass(AST.TokenNode)
+def execute(self):
+    # if isinstance(self.tok, str):
+    #     try:
+    #         return vars[self.tok]
+    #     except KeyError:
+    #         print("variable %s undefined !" % self.tok)
+    return self.tok
+
+
+@addToClass(AST.OpNode)
+def execute(self):
+    args = [c.execute() for c in self.children]
+    if len(args) == 1:
+        args.insert(0, 0)
+    return reduce(operations[self.op], args)
+
+@addToClass(AST.ArgumentNode)
+def execute(self):
+    # reourne les valeurs des arguments dans une liste
+    return [child.execute() for child in self.children]
+
 @addToClass(AST.MethodNode)
 def execute(self, writer):
+    # récupère une méthode de l'objet writer qui a le nom self.method
     methodToCall = getattr(writer, self.method)
+
     if self.children:
-        # gloabals() retourne un dictionnaire sur les fonctions globales https://docs.python.org/3/library/functions.html#globals
-        methodToCall(self.children[0].children) # children[0] contient le ArgumentNode
+        methodToCall(self.children[0].execute())  # children[0] contient le ArgumentNode
     else:
         methodToCall()
 
+        
 @addToClass(AST.AssignNode)
 def execute(self):
-    vars[self.children[0].tok] = self.children[1].execute()		
+    vars[self.children[0].tok] = self.children[1].execute()     
 
-@addToClass(AST.TokenNode)
+@addToClass(AST.VariableNode)
 def execute(self):
-    if isinstance(self.tok, str):
-        try:
-            return vars[self.tok]
-        except KeyError:
-            print ("*** Error: variable %s undefined!" % self.tok)
-    return self.tok
+    try:
+        return vars[self.tok]
+    except KeyError:
+        print("variable %s undefined !" % self.tok)
 
 #
 # Main
@@ -42,6 +76,7 @@ def execute(self):
 
 if __name__ == "__main__":
     from svg_parser import parse
+    from svg_writer import SvgWriter
     import sys
 
     try:

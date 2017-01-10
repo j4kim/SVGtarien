@@ -1,14 +1,14 @@
 title("Ceci est le titre")
 desc("Ceci est la description de notre compilateur")
 
+pos(100,100)
+move(200,200)
+
 stroke("black")
 fill("none")
 
-$a = 5
+$a = 500
 
-pos(10,20)
-
-
-pos(500,500)
+pos($a,0)
 
 line()
