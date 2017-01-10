@@ -77,6 +77,15 @@ def nostroke():
     options.remove("stroke-width")
 
 #
+# Clean the lists x and y
+#
+
+def clean():
+	x = []
+	y = []
+
+	
+#
 # Write a new line in svg
 #
 

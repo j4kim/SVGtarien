@@ -14,7 +14,8 @@ reserved_words = (
     'line',
     'ellipse',
     'text',
-    'while'
+    'while',
+	'clean'
 )
 
 tokens = (
