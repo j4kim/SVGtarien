@@ -1,14 +1,18 @@
 title("Ceci est le titre")
 desc("Ceci est la description de notre compilateur")
 
-pos(100,100)
-move(200,200)
+pos(0,0)
+pos(500,500)
+clean()
+
+$x = 21
+
+while $x {
+    $y = $x * $x
+    $x = $x - 1
+    pos($x * 50, 500 - $y * 4)
+}
 
 stroke("black")
 fill("none")
-
-$a = 500
-
-pos($a,0)
-
 line()

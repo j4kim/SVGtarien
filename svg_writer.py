@@ -1,7 +1,7 @@
 from options import Options
 
-class SvgWriter:
 
+class SvgWriter:
     def __init__(self):
         self.svg = ""
         self.x = []
@@ -22,9 +22,9 @@ class SvgWriter:
         x1, x2 = self.x[-2], self.x[-1]
         y1, y2 = self.y[-2], self.y[-1]
         # on s'assure d'avoir des valeurs positives pour w et h
-        if x2<x1 : x1,x2 = x2,x1 # swap x1 et x2
-        if y2<y1 : y1,y2 = y2,y1 # swap y1 et y2
-        w, h = x2-x1, y2-y1
+        if x2 < x1: x1, x2 = x2, x1  # swap x1 et x2
+        if y2 < y1: y1, y2 = y2, y1  # swap y1 et y2
+        w, h = x2 - x1, y2 - y1
 
         self.write('    <rect x="{}" y="{}" width="{}" height="{}" {}/>'.format(x1, y1, w, h, self.options))
 
@@ -47,7 +47,6 @@ class SvgWriter:
             for i in range(len(x)):
                 list_point += (str(x[-i - 1]) + "," + str(y[-i - 1]) + " ")
         self.write('    <polyline points="{}" {}/>'.format(list_point, self.options))
-
 
     #
     # move cursor
@@ -102,6 +101,6 @@ class SvgWriter:
 
     def finish(self):
         self.svg = '<?xml version="1.0" encoding="utf-8"?>\n' \
-                   '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="{}" height="{}">\n'\
+                   '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="{}" height="{}">\n' \
                        .format(self.w, self.h) + self.svg
         self.write('</svg>')

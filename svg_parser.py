@@ -11,13 +11,19 @@ def p_programme_statement(p):
 
 def p_programme_recursive(p):
     ''' programme : statement programme '''
-    p[0] = AST.ProgramNode([p[1]]+p[2].children)
+    p[0] = AST.ProgramNode([p[1]] + p[2].children)
 
 
 def p_statement(p):
     ''' statement : method 
-		| assignation '''
+		| assignation
+		| structure'''
     p[0] = p[1]
+
+
+def p_structure(p):
+    ''' structure : WHILE expression '{' programme '}' '''
+    p[0] = AST.WhileNode([p[2], p[4]])
 
 
 def p_method(p):
@@ -37,7 +43,7 @@ def p_arguments(p):
 
 def p_arguments_list(p):
     ''' arguments : expression ',' expression '''
-    p[0] = AST.ArgumentNode([p[1],p[3]])
+    p[0] = AST.ArgumentNode([p[1], p[3]])
 
 
 def p_methodName(p):
@@ -55,6 +61,7 @@ def p_expression_op(p):
             | expression MUL_OP expression'''
     p[0] = AST.OpNode(p[2], [p[1], p[3]])
 
+
 def p_minus(p):
     '''expression : ADD_OP expression %prec UMINUS'''
     p[0] = AST.OpNode(p[1], [p[2]])
@@ -63,24 +70,25 @@ def p_minus(p):
 
 def p_expression_string(p):
     '''expression : STRING '''
-    p[0] = AST.TokenNode(p[1][1:-1]) # [1:-1] enlève les guillemets de la string
+    p[0] = AST.TokenNode(p[1][1:-1])  # [1:-1] enlève les guillemets de la string
 
-	
+
 def p_assign(p):
     ''' assignation : VARIABLE '=' expression '''
-    p[0] = AST.AssignNode([AST.VariableNode(p[1]),p[3]])
+    p[0] = AST.AssignNode([AST.VariableNode(p[1]), p[3]])
+
 
 def p_assign_arguments(p):
-	''' expression : VARIABLE '''
-	p[0] = AST.VariableNode(p[1])
-	
+    ''' expression : VARIABLE '''
+    p[0] = AST.VariableNode(p[1])
+
+
 def p_error(p):
     if p:
-        print ("Syntax error in line %d" % p.lineno)
+        print("Syntax error in line %d" % p.lineno)
         yacc.errok()
     else:
-        print ("Sytax error: unexpected end of file!")
-
+        print("Sytax error: unexpected end of file!")
 
 
 precedence = (
@@ -92,6 +100,7 @@ precedence = (
 
 def parse(program):
     return yacc.parse(program)
+
 
 yacc.yacc(outputdir='generated')
 

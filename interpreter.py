@@ -11,7 +11,6 @@ operations = {
 vars = {}
 
 
-
 #
 # AST
 #
@@ -19,11 +18,27 @@ vars = {}
 @addToClass(AST.ProgramNode)
 def execute(self, writer):
     for c in self.children:
-        if isinstance(c, AST.MethodNode):
+        if isinstance(c, AST.MethodNode) or isinstance(c, AST.WhileNode):
             c.execute(writer)
-        else : 
+        else:
             c.execute()
-    writer.finish()
+
+
+@addToClass(AST.MethodNode)
+def execute(self, writer):
+    # récupère une méthode de l'objet writer qui a le nom self.method
+    methodToCall = getattr(writer, self.method)
+
+    if self.children:
+        methodToCall(self.children[0].execute())  # children[0] contient le ArgumentNode
+    else:
+        methodToCall()
+
+
+@addToClass(AST.WhileNode)
+def execute(self, writer):
+    while self.children[0].execute():
+        self.children[1].execute(writer)
 
 
 @addToClass(AST.TokenNode)
@@ -43,25 +58,17 @@ def execute(self):
         args.insert(0, 0)
     return reduce(operations[self.op], args)
 
+
 @addToClass(AST.ArgumentNode)
 def execute(self):
     # reourne les valeurs des arguments dans une liste
     return [child.execute() for child in self.children]
 
-@addToClass(AST.MethodNode)
-def execute(self, writer):
-    # récupère une méthode de l'objet writer qui a le nom self.method
-    methodToCall = getattr(writer, self.method)
 
-    if self.children:
-        methodToCall(self.children[0].execute())  # children[0] contient le ArgumentNode
-    else:
-        methodToCall()
-
-        
 @addToClass(AST.AssignNode)
 def execute(self):
-    vars[self.children[0].tok] = self.children[1].execute()     
+    vars[self.children[0].tok] = self.children[1].execute()
+
 
 @addToClass(AST.VariableNode)
 def execute(self):
@@ -69,6 +76,7 @@ def execute(self):
         return vars[self.tok]
     except KeyError:
         print("variable %s undefined !" % self.tok)
+
 
 #
 # Main
@@ -93,6 +101,7 @@ if __name__ == "__main__":
     ast = parse(prog)
     writer = SvgWriter()
     ast.execute(writer)
+    writer.finish()
 
     with open('output.svg', 'w') as f:
         f.write(writer.svg)

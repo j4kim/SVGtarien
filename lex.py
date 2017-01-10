@@ -15,21 +15,20 @@ reserved_words = (
     'line',
     'ellipse',
     'text',
-    'while',
-	'clean'
+    'clean'
 )
 
 tokens = (
-	 'RESERVEDWORDS',
-     'NUMBER',
-	 'STRING',
-     'ADD_OP',
-     'MUL_OP',
-     'VARIABLE',
+    'RESERVEDWORDS',
+    'NUMBER',
+    'STRING',
+    'ADD_OP',
+    'MUL_OP',
+    'VARIABLE',
+    'WHILE'
+)  # + tuple(w.upper() for w in reserved_words)
 
- )# + tuple(w.upper() for w in reserved_words)
-
-literals = '(),='
+literals = '(),={}'
 
 
 def t_NUMBER(t):
@@ -62,10 +61,15 @@ def t_STRING(t):
     return t
 
 
+def t_WHILE(t):
+    r'while'
+    return t
+
+
 def t_RESERVEDWORDS(t):
     r'[A-Za-z_]\w*'
     if t.value in reserved_words:
-        #t.type = t.value.upper()
+        # t.type = t.value.upper()
         return t
     print("Erreur lexicale: Le mot {} n'est pas connu".format(t.value))
 
