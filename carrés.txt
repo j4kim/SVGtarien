@@ -1,0 +1,25 @@
+title("des carrés")
+
+pos(0,0)
+pos(1920,1080)
+rect()
+
+$y = 300
+$x = 1920
+$r = 0
+$g = 0
+$b = 0
+$a = 1
+
+fill("rgb(240,0,0)")
+while $x {
+    pos($x,$y)
+    fill($r,$g,$b,$a/100)
+    rect($y/10)
+    $x = $x - 1
+    rand("$y",0,1080)
+    rand("$a",0,50)
+    rand("$r",0,255)
+    rand("$g",0,255)
+    rand("$b",0,255)
+}

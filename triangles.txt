@@ -1,0 +1,31 @@
+title("des triangles")
+
+size(1920,1080)
+clean()
+
+$size = 100
+
+stroke("black")
+
+$j = 10000
+while $j {
+    rand("$x",0,1920)
+    rand("$y",0,1080)
+    pos($x,$y)
+    $i = 2
+    while $i {
+        rand("$dx",-$size,$size)
+        rand("$dy",-$size,$size)
+        move($dx,$dy)
+        $i = $i-1
+    }
+    pos($x,$y)
+
+    rand("$r",50,255)
+    rand("$b",50,150)
+    rand("$g",150,255)
+    fill($r,$g,$b,0.75)
+    line()
+    clean()
+    $j = $j-1
+}

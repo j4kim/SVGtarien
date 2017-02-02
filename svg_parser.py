@@ -1,3 +1,5 @@
+import os
+
 import ply.yacc as yacc
 
 from lex import tokens
@@ -40,10 +42,18 @@ def p_arguments(p):
     ''' arguments : expression '''
     p[0] = AST.ArgumentNode(p[1])
 
-
+# TODO: nombre d'arguments variable
 def p_arguments_list(p):
     ''' arguments : expression ',' expression '''
     p[0] = AST.ArgumentNode([p[1], p[3]])
+
+def p_arguments_list_3(p):
+    ''' arguments : expression ',' expression ',' expression '''
+    p[0] = AST.ArgumentNode([p[1], p[3], p[5]])
+
+def p_arguments_list_4(p):
+    ''' arguments : expression ',' expression ',' expression ',' expression '''
+    p[0] = AST.ArgumentNode([p[1], p[3], p[5], p[7]])
 
 
 def p_methodName(p):
@@ -55,6 +65,10 @@ def p_expression(p):
     '''expression : NUMBER '''
     p[0] = AST.TokenNode(p[1])
 
+
+def p_expression_paren(p):
+    '''expression : '(' expression ')' '''
+    p[0] = p[2]
 
 def p_expression_op(p):
     '''expression : expression ADD_OP expression
@@ -102,6 +116,8 @@ def parse(program):
     return yacc.parse(program)
 
 
+if not os.path.exists("generated"):
+    os.mkdir("generated")
 yacc.yacc(outputdir='generated')
 
 if __name__ == "__main__":
@@ -110,7 +126,7 @@ if __name__ == "__main__":
     try:
         filename = sys.argv[1]
     except:
-        filename = "test.txt"
+        filename = "yolo.txt"
 
     prog = open(filename).read()
     result = yacc.parse(prog)

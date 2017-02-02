@@ -4,6 +4,7 @@ reserved_words = (
     'pos',
     'move',
     'clean',
+    'size',
     'title',
     'desc',
     'fill',
@@ -15,7 +16,8 @@ reserved_words = (
     'line',
     'ellipse',
     'text',
-    'clean'
+    'clean',
+    'rand'
 )
 
 tokens = (

@@ -8,6 +8,7 @@ class SvgWriter:
         self.y = []
         self.options = Options()
         self.w = self.h = 0
+        self.sizeFixed = False
 
     def title(self, args):
         self.write('    <title>{}</title>'.format(args[0]))
@@ -18,13 +19,20 @@ class SvgWriter:
     def text(self, args):
         self.write('    <text x="{}" y="{}" {}>{}</text>'.format(self.x[-1], self.y[-1], self.options, args[0]))
 
-    def rect(self):
-        x1, x2 = self.x[-2], self.x[-1]
-        y1, y2 = self.y[-2], self.y[-1]
-        # on s'assure d'avoir des valeurs positives pour w et h
-        if x2 < x1: x1, x2 = x2, x1  # swap x1 et x2
-        if y2 < y1: y1, y2 = y2, y1  # swap y1 et y2
-        w, h = x2 - x1, y2 - y1
+    def rect(self,args=None):
+        if not args:
+            x1, x2 = self.x[-2], self.x[-1]
+            y1, y2 = self.y[-2], self.y[-1]
+            # on s'assure d'avoir des valeurs positives pour w et h
+            if x2 < x1: x1, x2 = x2, x1  # swap x1 et x2
+            if y2 < y1: y1, y2 = y2, y1  # swap y1 et y2
+            w, h = x2 - x1, y2 - y1
+        else:
+            x1 = self.x[-1]
+            y1 = self.y[-1]
+            w = args[0]
+            try: h = args[1]
+            except: h=w
 
         self.write('    <rect x="{}" y="{}" width="{}" height="{}" {}/>'.format(x1, y1, w, h, self.options))
 
@@ -55,8 +63,9 @@ class SvgWriter:
     def updatePos(self, x, y):
         self.x.append(x)
         self.y.append(y)
-        if x > self.w: self.w = x
-        if y > self.h: self.h = y
+        if not self.sizeFixed:
+            if x > self.w: self.w = x
+            if y > self.h: self.h = y
 
     def pos(self, args):
         self.updatePos(args[0], args[1])
@@ -68,15 +77,37 @@ class SvgWriter:
         self.x = []
         self.y = []
 
+    def size(self, args):
+        self.w = args[0]
+        self.h = args[1]
+        self.sizeFixed = True
+
     #
     # Change color/stroke options
     #
 
-    def fill(self, arg):
-        self.options.add("fill", arg[0])
+    def fill(self, args):
+        if len(args) > 2:
+            r = int(args[0])
+            g = int(args[1])
+            b = int(args[2])
+            try: a = args[3]
+            except: a = 1
+            self.options.add("fill", "rgba({},{},{},{})".format(r,g,b,a))
+        else:
+            self.options.add("fill", args[0])
 
-    def stroke(self, arg):
-        self.options.add("stroke", arg[0])
+    def stroke(self, args):
+        # todo: dry
+        if len(args) > 2:
+            r = int(args[0])
+            g = int(args[1])
+            b = int(args[2])
+            try: a = args[3]
+            except: a = 1
+            self.options.add("stroke", "rgba({},{},{},{})".format(r,g,b,a))
+        else:
+            self.options.add("stroke", args[0])
 
     def width(self, arg):
         self.options.add("stroke-width", arg[0])

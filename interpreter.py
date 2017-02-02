@@ -1,3 +1,5 @@
+import random
+
 import AST
 from AST import addToClass
 from functools import reduce
@@ -26,9 +28,15 @@ def execute(self, writer):
 
 @addToClass(AST.MethodNode)
 def execute(self, writer):
+
+    # TODO: nouveau noeud Function qui retourne des données
+    if self.method == "rand":
+        s, min, max = self.children[0].execute()
+        vars[s] = random.randint(min, max)
+        return
+
     # récupère une méthode de l'objet writer qui a le nom self.method
     methodToCall = getattr(writer, self.method)
-
     if self.children:
         methodToCall(self.children[0].execute())  # children[0] contient le ArgumentNode
     else:
@@ -43,11 +51,6 @@ def execute(self, writer):
 
 @addToClass(AST.TokenNode)
 def execute(self):
-    # if isinstance(self.tok, str):
-    #     try:
-    #         return vars[self.tok]
-    #     except KeyError:
-    #         print("variable %s undefined !" % self.tok)
     return self.tok
 
 
@@ -90,12 +93,12 @@ if __name__ == "__main__":
     try:
         filename = sys.argv[1]
     except:
-        filename = "test.txt"
+        filename = "triangles.txt"
 
     try:
         prog = open(filename).read()
     except:
-        print("yolo")
+        print("Le fichier {} n'a pas pu être lu".format(filename))
         sys.exit()
 
     ast = parse(prog)
