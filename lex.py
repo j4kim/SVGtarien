@@ -31,6 +31,7 @@ tokens = (
     'ADD_OP',
     'MUL_OP',
     'MOD_OP',
+    'CONDITION_OP',
     'VARIABLE',
     'WHILE'
 )  # + tuple(w.upper() for w in reserved_words)
@@ -58,7 +59,11 @@ def t_MUL_OP(t):
     return t
 
 def t_MOD_OP(t):
-    r'[%]'
+    r'%'
+    return t
+
+def t_CONDITION_OP(t):
+    r'==|!=|<=|>=|<|>'
     return t
 
 
