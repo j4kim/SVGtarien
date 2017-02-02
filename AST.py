@@ -80,6 +80,16 @@ class MethodNode(Node):
     def __repr__(self):
         return "method " + self.method
 
+class FunctionNode(Node):
+    type = 'function'
+
+    def __init__(self, f, children=[]):
+        Node.__init__(self, children)
+        self.f = f
+
+    def __repr__(self):
+        return "function " + self.f
+
 
 class ArgumentNode(Node):
     type = 'arguments'

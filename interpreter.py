@@ -1,3 +1,5 @@
+import random
+
 import AST
 from AST import addToClass
 from functools import reduce
@@ -7,6 +9,13 @@ operations = {
     '-': lambda x, y: x - y,
     '*': lambda x, y: x * y,
     '/': lambda x, y: x / y,
+    '%': lambda x, y: x % y,
+    "==": lambda x,y: x==y,
+    "!=": lambda x,y: x!=y,
+    "<": lambda x,y: x<y,
+    "<=": lambda x,y: x<=y,
+    ">": lambda x,y: x>y,
+    ">=": lambda x,y: x>=y,
 }
 vars = {}
 
@@ -26,13 +35,22 @@ def execute(self, writer):
 
 @addToClass(AST.MethodNode)
 def execute(self, writer):
+
     # récupère une méthode de l'objet writer qui a le nom self.method
     methodToCall = getattr(writer, self.method)
-
     if self.children:
         methodToCall(self.children[0].execute())  # children[0] contient le ArgumentNode
     else:
         methodToCall()
+
+@addToClass(AST.FunctionNode)
+def execute(self):
+    if self.f == "rand":
+        if not self.children:
+            return random.random()
+        else:
+            args = self.children[0].execute()
+            return random.randrange(*args)
 
 
 @addToClass(AST.WhileNode)
@@ -43,11 +61,6 @@ def execute(self, writer):
 
 @addToClass(AST.TokenNode)
 def execute(self):
-    # if isinstance(self.tok, str):
-    #     try:
-    #         return vars[self.tok]
-    #     except KeyError:
-    #         print("variable %s undefined !" % self.tok)
     return self.tok
 
 
@@ -95,7 +108,7 @@ if __name__ == "__main__":
     try:
         prog = open(filename).read()
     except:
-        print("yolo")
+        print("Le fichier {} n'a pas pu être lu".format(filename))
         sys.exit()
 
     ast = parse(prog)

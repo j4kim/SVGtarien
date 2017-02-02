@@ -1,18 +1,15 @@
-title("Ceci est le titre")
-desc("Ceci est la description de notre compilateur")
+size(1920,1080)
 
-pos(0,0)
-pos(500,500)
-clean()
+$x = 20
+$y = 20
 
-$x = 21
+$i = 0
+while $i < 12{
+    pos($x, $y % 200)
+    ellipse(10)
 
-while $x {
-    $y = $x * $x
-    $x = $x - 1
-    pos($x * 50, 500 - $y * 4)
+    $x = $x + 20
+    $y = $y + 20
+
+    $i = $i + 5
 }
-
-stroke("black")
-fill("none")
-line()
