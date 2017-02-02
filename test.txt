@@ -1,11 +1,15 @@
 size(1920,1080)
 
-stroke("white")
-width(3)
+$x = 20
+$y = 20
 
-$i= 5000
+$i = 100
 while $i{
-    pos(rand(1920), rand(1080))
-    ellipse(20)
-    $i=$i-1
+    pos($x, $y % 200)
+    ellipse(10)
+
+    $x = $x + 20
+    $y = $y + 20
+
+    $i = $i - 1
 }
