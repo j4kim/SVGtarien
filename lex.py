@@ -1,6 +1,6 @@
 import ply.lex as lex
 
-reserved_words = (
+methods = (
     'pos',
     'move',
     'clean',
@@ -16,12 +16,16 @@ reserved_words = (
     'line',
     'ellipse',
     'text',
-    'clean',
-    'rand'
+    'clean'
 )
 
+functions = {
+    'sin','cos','tan','str','int','rand'
+}
+
 tokens = (
-    'RESERVEDWORDS',
+    'METHODS',
+    'FUNCTIONS',
     'NUMBER',
     'STRING',
     'ADD_OP',
@@ -70,8 +74,11 @@ def t_WHILE(t):
 
 def t_RESERVEDWORDS(t):
     r'[A-Za-z_]\w*'
-    if t.value in reserved_words:
-        # t.type = t.value.upper()
+    if t.value in methods:
+        t.type = "METHODS"
+        return t
+    elif t.value in functions:
+        t.type = "FUNCTIONS"
         return t
     print("Erreur lexicale: Le mot {} n'est pas connu".format(t.value))
 

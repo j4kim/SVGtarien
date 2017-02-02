@@ -9,22 +9,20 @@ stroke("black")
 
 $j = 10000
 while $j {
-    rand("$x",0,1920)
-    rand("$y",0,1080)
+    $x = rand(1920)
+    $y = rand(1080)
     pos($x,$y)
     $i = 2
     while $i {
-        rand("$dx",-$size,$size)
-        rand("$dy",-$size,$size)
-        move($dx,$dy)
+        move(rand(-$size, $size), rand(-$size, $size))
         $i = $i-1
     }
     pos($x,$y)
 
-    rand("$r",50,255)
-    rand("$b",50,150)
-    rand("$g",150,255)
-    fill($r,$g,$b,0.75)
+    $r = rand(50,255)
+    $b = rand(50,150)
+    $g = rand(150,255)
+    fill($r, $g, $b, 0.75)
     line()
     clean()
     $j = $j-1

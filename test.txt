@@ -1,0 +1,11 @@
+size(1920,1080)
+
+stroke("white")
+width(3)
+
+$i= 5000
+while $i{
+    pos(rand(1920), rand(1080))
+    ellipse(20)
+    $i=$i-1
+}

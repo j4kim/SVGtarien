@@ -17,9 +17,9 @@ while $x {
     fill($r,$g,$b,$a/100)
     rect($y/10)
     $x = $x - 1
-    rand("$y",0,1080)
-    rand("$a",0,50)
-    rand("$r",0,255)
-    rand("$g",0,255)
-    rand("$b",0,255)
+    $y = rand(1080)
+    $a = rand(50)
+    $r = rand(256)
+    $g = rand(256)
+    $b = rand(256)
 }

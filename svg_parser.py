@@ -28,6 +28,10 @@ def p_structure(p):
     p[0] = AST.WhileNode([p[2], p[4]])
 
 
+def p_assign(p):
+    ''' assignation : VARIABLE '=' expression '''
+    p[0] = AST.AssignNode([AST.VariableNode(p[1]), p[3]])
+
 def p_method(p):
     ''' method : methodName '(' ')' '''
     p[0] = AST.MethodNode(p[1])
@@ -36,6 +40,16 @@ def p_method(p):
 def p_method_arg(p):
     ''' method : methodName '(' arguments ')' '''
     p[0] = AST.MethodNode(p[1], [p[3]])
+
+
+def p_function(p):
+    ''' function : functionName '(' ')' '''
+    p[0] = AST.FunctionNode(p[1])
+
+
+def p_func_arg(p):
+    ''' function : functionName '(' arguments ')' '''
+    p[0] = AST.FunctionNode(p[1], [p[3]])
 
 
 def p_arguments(p):
@@ -56,15 +70,21 @@ def p_arguments_list_4(p):
     p[0] = AST.ArgumentNode([p[1], p[3], p[5], p[7]])
 
 
-def p_methodName(p):
-    ''' methodName : RESERVEDWORDS'''
+def p_method_name(p):
+    ''' methodName : METHODS'''
     p[0] = p[1]
 
+def p_function_name(p):
+    ''' functionName : FUNCTIONS'''
+    p[0] = p[1]
 
 def p_expression(p):
     '''expression : NUMBER '''
     p[0] = AST.TokenNode(p[1])
 
+def p_expression_func(p):
+    '''expression : function'''
+    p[0] = p[1]
 
 def p_expression_paren(p):
     '''expression : '(' expression ')' '''
@@ -85,11 +105,6 @@ def p_minus(p):
 def p_expression_string(p):
     '''expression : STRING '''
     p[0] = AST.TokenNode(p[1][1:-1])  # [1:-1] enlève les guillemets de la string
-
-
-def p_assign(p):
-    ''' assignation : VARIABLE '=' expression '''
-    p[0] = AST.AssignNode([AST.VariableNode(p[1]), p[3]])
 
 
 def p_assign_arguments(p):
@@ -126,7 +141,7 @@ if __name__ == "__main__":
     try:
         filename = sys.argv[1]
     except:
-        filename = "yolo.txt"
+        filename = "test.txt"
 
     prog = open(filename).read()
     result = yacc.parse(prog)

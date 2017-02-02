@@ -6,13 +6,13 @@ rect()
 
 $x = 1920
 while $x {
-    rand("$y",0,1080)
+    $y = rand(1080)
 
     $r = 255*$x/1920
     $g = 255*$y/1080
     $b = 255-$r
 
-    rand("$a",0,50)
+    $a = rand(50)
 
     pos($x,$y)
     fill($r,$g,$b,$a/50)
