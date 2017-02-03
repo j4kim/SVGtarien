@@ -1,3 +1,4 @@
+# intiialise image size
 size(1920,1080)
 
 $x = 20
@@ -5,7 +6,7 @@ $y = 20
 
 $i = 0
 while $i < 12{
-    pos($x, $y % 200)
+    pos($x, $y % 200) # move cursor
     ellipse(10)
 
     $x = $x + 20

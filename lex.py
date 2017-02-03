@@ -81,6 +81,10 @@ def t_WHILE(t):
     r'while'
     return t
 
+def t_COMMENT(t):
+    r'\#.*'
+    pass
+
 
 def t_RESERVEDWORDS(t):
     r'[A-Za-z_]\w*'
