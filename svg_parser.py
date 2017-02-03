@@ -82,7 +82,7 @@ def p_minus(p):
 
 def p_expression_string(p):
     '''expression : STRING '''
-    p[0] = AST.TokenNode(p[1][1:-1])  # [1:-1] enlève les guillemets de la string
+    p[0] = AST.TokenNode(p[1])
 
 def p_assign_arguments(p):
     ''' expression : VARIABLE '''

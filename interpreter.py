@@ -35,7 +35,6 @@ def execute(self, writer):
 
 @addToClass(AST.MethodNode)
 def execute(self, writer):
-
     # récupère une méthode de l'objet writer qui a le nom self.method
     methodToCall = getattr(writer, self.method)
     if self.children:
@@ -88,7 +87,7 @@ def execute(self):
     try:
         return vars[self.tok]
     except KeyError:
-        print("variable %s undefined !" % self.tok)
+        print("variable {} undefined !".format(self.tok))
 
 
 #

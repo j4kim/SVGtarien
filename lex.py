@@ -20,7 +20,13 @@ methods = (
 )
 
 functions = {
-    'sin','cos','tan','str','int','rand'
+    'sin','cos','tan',
+    'str','int',
+    'rand'
+}
+
+structures = {
+    'while', 'if', 'else', 'for'
 }
 
 tokens = (
@@ -32,12 +38,16 @@ tokens = (
     'MUL_OP',
     'MOD_OP',
     'CONDITION_OP',
-    'VARIABLE',
-    'WHILE'
-)  # + tuple(w.upper() for w in reserved_words)
+    'VARIABLE'
+) + tuple(map(lambda s:s.upper(), structures))
 
 literals = '(),={}'
 
+t_ADD_OP = r'[+-]'
+t_MUL_OP = r'[*/]'
+t_MOD_OP = r'%'
+t_CONDITION_OP = r'==|!=|<=|>=|<|>'
+t_VARIABLE = r'\$[A-Za-z_]\w*'
 
 def t_NUMBER(t):
     r'\d+(\.\d+)?'
@@ -48,43 +58,14 @@ def t_NUMBER(t):
         t.value = 0
     return t
 
-
-def t_ADD_OP(t):
-    r'[+-]'
-    return t
-
-
-def t_MUL_OP(t):
-    r'[*/]'
-    return t
-
-def t_MOD_OP(t):
-    r'%'
-    return t
-
-def t_CONDITION_OP(t):
-    r'==|!=|<=|>=|<|>'
-    return t
-
-
-def t_VARIABLE(t):
-    r'\$[A-Za-z_]\w*'
-    return t
-
-
 def t_STRING(t):
     r'\".*?\"'
-    return t
-
-
-def t_WHILE(t):
-    r'while'
+    t.value = t.value[1:-1] # [1:-1] enlève les guillemets de la string
     return t
 
 def t_COMMENT(t):
-    r'\#.*'
+    r'[#].*'
     pass
-
 
 def t_RESERVEDWORDS(t):
     r'[A-Za-z_]\w*'
@@ -94,21 +75,20 @@ def t_RESERVEDWORDS(t):
     elif t.value in functions:
         t.type = "FUNCTIONS"
         return t
+    elif t.value in structures:
+        t.type = t.value.upper()
+        return t
     print("Erreur lexicale: Le mot {} n'est pas connu".format(t.value))
-
 
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
-
 t_ignore = ' \t'
-
 
 def t_error(t):
     print("Illegal character '%s'" % repr(t.value[0]))
     t.lexer.skip(1)
-
 
 lex.lex()
 
