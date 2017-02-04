@@ -1,16 +1,18 @@
 # intiialise image size
 size(1920,1080)
 
-$x = 20
-$y = 20
+$x = 0
+$y = 0
 
 $i = 0
-while $i < 12{
-    pos($x, $y % 200) # move cursor
+while $i < 500{
+    pos($x, $y) # move cursor
     ellipse(10)
 
     $x = $x + 20
-    $y = $y + 20
+    if ($x % 100 == 0){
+        $y = $y + 100
+    }
 
     $i = $i + 5
 }

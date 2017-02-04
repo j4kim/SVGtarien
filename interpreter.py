@@ -27,7 +27,8 @@ vars = {}
 @addToClass(AST.ProgramNode)
 def execute(self, writer):
     for c in self.children:
-        if isinstance(c, AST.MethodNode) or isinstance(c, AST.WhileNode):
+        # todo: writer global ou singleton
+        if isinstance(c, AST.MethodNode) or isinstance(c, AST.WhileNode) or isinstance(c, AST.IfNode):
             c.execute(writer)
         else:
             c.execute()
@@ -55,6 +56,11 @@ def execute(self):
 @addToClass(AST.WhileNode)
 def execute(self, writer):
     while self.children[0].execute():
+        self.children[1].execute(writer)
+
+@addToClass(AST.IfNode)
+def execute(self, writer):
+    if self.children[0].execute():
         self.children[1].execute(writer)
 
 

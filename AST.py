@@ -65,11 +65,6 @@ class OpNode(Node):
 class AssignNode(Node):
     type = '='
 
-
-class PrintNode(Node):
-    type = 'print'
-
-
 class MethodNode(Node):
     type = 'method'
 
@@ -97,6 +92,9 @@ class ArgumentNode(Node):
 
 class WhileNode(Node):
     type = 'while'
+
+class IfNode(Node):
+    type = 'if'
 
 
 class EntryNode(Node):

@@ -23,9 +23,13 @@ def p_statement(p):
     p[0] = p[1]
 
 
-def p_structure(p):
+def p_structure_while(p):
     ''' structure : WHILE expression '{' programme '}' '''
     p[0] = AST.WhileNode([p[2], p[4]])
+
+def p_structure_if(p):
+    ''' structure : IF expression '{' programme '}' '''
+    p[0] = AST.IfNode([p[2], p[4]])
 
 
 def p_assign(p):
