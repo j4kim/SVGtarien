@@ -7,11 +7,14 @@ $y = 0
 $i = 0
 while $i < 500{
     pos($x, $y) # move cursor
+    $c = $x*255/1920
+    fill($c,$c,$c)
     ellipse(10)
 
     $x = $x + 20
+    $y = $y + 20
     if ($x % 100 == 0){
-        $y = $y + 100
+        $y = $y - $x/15
     }
 
     $i = $i + 5
