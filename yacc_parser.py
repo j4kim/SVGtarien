@@ -2,7 +2,7 @@ import os
 
 import ply.yacc as yacc
 
-from lex import tokens
+from lex_parser import tokens
 import AST
 
 

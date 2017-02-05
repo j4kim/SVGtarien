@@ -106,7 +106,7 @@ def execute(self):
 #
 
 if __name__ == "__main__":
-    from svg_parser import parse
+    from yacc_parser import parse
     import sys
 
     try:
