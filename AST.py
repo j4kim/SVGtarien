@@ -1,21 +1,13 @@
 ﻿class Node:
-    count = 0
     type = 'Node (unspecified)'
-    shape = 'ellipse'
 
     def __init__(self, children=None):
-        self.ID = str(Node.count)
-        Node.count += 1
         if not children:
             self.children = []
-        elif hasattr(children, '__len__'):
+        elif isinstance(children, list):
             self.children = children
         else:
             self.children = [children]
-        self.next = []
-
-    def addNext(self, next):
-        self.next.append(next)
 
     def asciitree(self, prefix=''):
         result = "%s%s\n" % (prefix, repr(self))
