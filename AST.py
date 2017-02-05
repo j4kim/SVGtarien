@@ -85,10 +85,8 @@ class FunctionNode(Node):
     def __repr__(self):
         return "function " + self.f
 
-
 class ArgumentNode(Node):
     type = 'arguments'
-
 
 class WhileNode(Node):
     type = 'while'
@@ -96,13 +94,8 @@ class WhileNode(Node):
 class IfNode(Node):
     type = 'if'
 
-
-class EntryNode(Node):
-    type = 'ENTRY'
-
-    def __init__(self):
-        Node.__init__(self, None)
-
+class IfElseNode(Node):
+    type = 'ifelse'
 
 class VariableNode(TokenNode):
     type = 'variable'

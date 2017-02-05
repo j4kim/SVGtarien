@@ -1,22 +1,10 @@
 import ply.lex as lex
 
 methods = (
-    'pos',
-    'move',
-    'clean',
-    'size',
-    'title',
-    'desc',
-    'fill',
-    'nofill',
-    'stroke',
-    'nostroke',
-    'width',
-    'rect',
-    'line',
-    'ellipse',
-    'text',
-    'clean'
+    'pos', 'move', 'clean',
+    'size', 'title', 'desc',
+    'fill', 'nofill', 'stroke', 'nostroke', 'width',
+    'rect', 'line', 'ellipse', 'text'
 )
 
 functions = {
@@ -30,15 +18,9 @@ structures = {
 }
 
 tokens = (
-    'METHODS',
-    'FUNCTIONS',
-    'NUMBER',
-    'STRING',
-    'ADD_OP',
-    'MUL_OP',
-    'MOD_OP',
-    'CONDITION_OP',
-    'VARIABLE'
+    'METHODS', 'FUNCTIONS',
+    'NUMBER', 'STRING', 'VARIABLE',
+    'ADD_OP', 'MUL_OP', 'MOD_OP', 'CONDITION_OP',
 ) + tuple(map(lambda s:s.upper(), structures))
 
 literals = '(),={}'

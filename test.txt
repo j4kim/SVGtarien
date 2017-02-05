@@ -2,20 +2,26 @@
 size(1920,1080)
 
 $x = 0
-$y = 0
+$y = 540
 
-$i = 0
-while $i < 500{
-    pos($x, $y) # move cursor
-    $c = $x*255/1920
-    fill($c,$c,$c)
-    ellipse(10)
+while $x < 1920{
 
-    $x = $x + 20
-    $y = $y + 20
-    if ($x % 100 == 0){
-        $y = $y - $x/15
+    # if x is even
+    if ($x % 2 == 0){
+        $y = $y+$x/2
+    }else{
+        $y = $y-$x/2
     }
 
-    $i = $i + 5
+    pos($x, $y)
+    $c = $x*255/1920
+    fill(0,$c,255-$c)
+
+    ellipse(10)
+
+    $x = $x + 19
 }
+
+fill("none")
+stroke("black")
+line()

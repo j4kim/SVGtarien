@@ -10,12 +10,12 @@ operations = {
     '*': lambda x, y: x * y,
     '/': lambda x, y: x / y,
     '%': lambda x, y: x % y,
-    "==": lambda x,y: x==y,
-    "!=": lambda x,y: x!=y,
-    "<": lambda x,y: x<y,
-    "<=": lambda x,y: x<=y,
-    ">": lambda x,y: x>y,
-    ">=": lambda x,y: x>=y,
+    "==": lambda x,y: x == y,
+    "!=": lambda x,y: x != y,
+    "<":  lambda x,y: x < y,
+    "<=": lambda x,y: x <= y,
+    ">":  lambda x,y: x > y,
+    ">=": lambda x,y: x >= y,
 }
 vars = {}
 
@@ -28,7 +28,7 @@ vars = {}
 def execute(self, writer):
     for c in self.children:
         # todo: writer global ou singleton
-        if isinstance(c, AST.MethodNode) or isinstance(c, AST.WhileNode) or isinstance(c, AST.IfNode):
+        if isinstance(c, AST.MethodNode) or isinstance(c, AST.WhileNode) or isinstance(c, AST.IfNode) or isinstance(c, AST.IfElseNode):
             c.execute(writer)
         else:
             c.execute()
@@ -62,6 +62,13 @@ def execute(self, writer):
 def execute(self, writer):
     if self.children[0].execute():
         self.children[1].execute(writer)
+
+@addToClass(AST.IfElseNode)
+def execute(self, writer):
+    if self.children[0].execute():
+        self.children[1].execute(writer)
+    else:
+        self.children[2].execute(writer)
 
 
 @addToClass(AST.TokenNode)
