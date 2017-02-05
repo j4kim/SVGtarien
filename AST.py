@@ -10,11 +10,11 @@
             self.children = [children]
 
     def asciitree(self, prefix=''):
-        result = "%s%s\n" % (prefix, repr(self))
+        result = "{}{}\n".format(prefix, repr(self))
         prefix += '|  '
         for c in self.children:
             if not isinstance(c, Node):
-                result += "%s*** Error: Child of type %r: %r\n" % (prefix, type(c), c)
+                result += "{}*** Error: Child of type {}: {}\n".format(prefix, type(c), c)
                 continue
             result += c.asciitree(prefix)
         return result
@@ -38,8 +38,12 @@ class TokenNode(Node):
         self.tok = tok
 
     def __repr__(self):
-        return repr(self.tok)
+        # return repr(self.tok)
+        return "{} ({})".format(self.tok, self.type)
 
+
+class VariableNode(TokenNode):
+    type = 'variable'
 
 class OpNode(Node):
     def __init__(self, op, children):
@@ -88,9 +92,6 @@ class IfNode(Node):
 
 class IfElseNode(Node):
     type = 'ifelse'
-
-class VariableNode(TokenNode):
-    type = 'variable'
 
 
 def addToClass(cls):

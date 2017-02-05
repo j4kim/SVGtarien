@@ -79,6 +79,7 @@ def p_expression_paren(p):
 def p_expression_op(p):
     '''expression : expression ADD_OP expression
             | expression MUL_OP expression
+            | expression POW_OP expression
             | expression MOD_OP expression
             | expression CONDITION_OP expression'''
     p[0] = AST.OpNode(p[2], [p[1], p[3]])
@@ -107,6 +108,7 @@ precedence = (
     ('left', 'CONDITION_OP'),
     ('left', 'ADD_OP'),
     ('left', 'MUL_OP'),
+    ('left', 'POW_OP'),
     ('left', 'MOD_OP'),
     ('right', 'UMINUS'),
 )

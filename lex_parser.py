@@ -20,12 +20,13 @@ structures = {
 tokens = (
     'METHODS', 'FUNCTIONS',
     'NUMBER', 'STRING', 'VARIABLE',
-    'ADD_OP', 'MUL_OP', 'MOD_OP', 'CONDITION_OP',
+    'ADD_OP', 'MUL_OP', 'MOD_OP', 'CONDITION_OP', 'POW_OP'
 ) + tuple(map(lambda s:s.upper(), structures))
 
 literals = '(),={}'
 
 t_ADD_OP = r'[+-]'
+t_POW_OP = r'\^'
 t_MUL_OP = r'[*/]'
 t_MOD_OP = r'%'
 t_CONDITION_OP = r'==|!=|<=|>=|<|>'

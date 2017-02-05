@@ -12,12 +12,13 @@ operations = {
     '*': lambda x, y: x * y,
     '/': lambda x, y: x / y,
     '%': lambda x, y: x % y,
-    "==": lambda x,y: x == y,
-    "!=": lambda x,y: x != y,
-    "<":  lambda x,y: x < y,
-    "<=": lambda x,y: x <= y,
-    ">":  lambda x,y: x > y,
-    ">=": lambda x,y: x >= y,
+    '^': lambda x, y: x ** y,
+    '==': lambda x,y: x == y,
+    '!=': lambda x,y: x != y,
+    '<':  lambda x,y: x < y,
+    '<=': lambda x,y: x <= y,
+    '>':  lambda x,y: x > y,
+    '>=': lambda x,y: x >= y,
 }
 vars = {}
 
@@ -34,7 +35,7 @@ def execute(self):
 
 @addToClass(AST.MethodNode)
 def execute(self):
-    # récupère une méthode de l'objet writer qui a le nom self.method
+    # récupère une méthode de la classe svgWriter qui a le nom self.method
     methodToCall = getattr(svg, self.method)
     if self.children:
         methodToCall(self.children[0].execute())  # children[0] contient le ArgumentNode
