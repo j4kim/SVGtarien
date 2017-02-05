@@ -1,49 +1,53 @@
 from options import Options
 
-
 class SvgWriter:
-    def __init__(self):
-        self.svg = ""
-        self.x = []
-        self.y = []
-        self.options = Options()
-        self.w = self.h = 0
-        self.sizeFixed = False
+    svg = ""
+    x = []
+    y = []
+    options = Options()
+    w = h = 0
+    sizeFixed = False
 
-    def title(self, args):
-        self.write('    <title>{}</title>'.format(args[0]))
+    @classmethod
+    def title(cls, args):
+        cls.write('    <title>{}</title>'.format(args[0]))
 
-    def desc(self, args):
-        self.write('    <desc>{}</desc>'.format(args[0]))
+    @classmethod
+    def desc(cls, args):
+        cls.write('    <desc>{}</desc>'.format(args[0]))
 
-    def text(self, args):
-        self.write('    <text x="{}" y="{}" {}>{}</text>'.format(self.x[-1], self.y[-1], self.options, args[0]))
+    @classmethod
+    def text(cls, args):
+        cls.write('    <text x="{}" y="{}" {}>{}</text>'.format(cls.x[-1], cls.y[-1], cls.options, args[0]))
 
-    def rect(self,args=None):
+    @classmethod
+    def rect(cls,args=None):
         if not args:
-            x1, x2 = self.x[-2], self.x[-1]
-            y1, y2 = self.y[-2], self.y[-1]
+            x1, x2 = cls.x[-2], cls.x[-1]
+            y1, y2 = cls.y[-2], cls.y[-1]
             # on s'assure d'avoir des valeurs positives pour w et h
             if x2 < x1: x1, x2 = x2, x1  # swap x1 et x2
             if y2 < y1: y1, y2 = y2, y1  # swap y1 et y2
             w, h = x2 - x1, y2 - y1
         else:
-            x1 = self.x[-1]
-            y1 = self.y[-1]
+            x1 = cls.x[-1]
+            y1 = cls.y[-1]
             w = args[0]
             try: h = args[1]
             except: h=w
 
-        self.write('    <rect x="{}" y="{}" width="{}" height="{}" {}/>'.format(x1, y1, w, h, self.options))
+        cls.write('    <rect x="{}" y="{}" width="{}" height="{}" {}/>'.format(x1, y1, w, h, cls.options))
 
-    def ellipse(self, args):
+    @classmethod
+    def ellipse(cls, args):
         r = args[0]
-        self.write('    <circle cx="{}" cy="{}" r="{}" {}/>'.format(self.x[-1], self.y[-1], r, self.options))
+        cls.write('    <circle cx="{}" cy="{}" r="{}" {}/>'.format(cls.x[-1], cls.y[-1], r, cls.options))
 
-    def line(self, *args):
+    @classmethod
+    def line(cls, *args):
         list_point = ""
-        x = self.x
-        y = self.y
+        x = cls.x
+        y = cls.y
         if args:  # If args is not empty.
             if args[0][0] > 1:
                 for i in range(int(args[0][0])):
@@ -54,50 +58,57 @@ class SvgWriter:
         else:
             for i in range(len(x)):
                 list_point += (str(x[-i - 1]) + "," + str(y[-i - 1]) + " ")
-        self.write('    <polyline points="{}" {}/>'.format(list_point, self.options))
+        cls.write('    <polyline points="{}" {}/>'.format(list_point, cls.options))
 
     #
     # move cursor
     #
 
-    def updatePos(self, x, y):
-        self.x.append(x)
-        self.y.append(y)
-        if not self.sizeFixed:
-            if x > self.w: self.w = x
-            if y > self.h: self.h = y
+    @classmethod
+    def updatePos(cls, x, y):
+        cls.x.append(x)
+        cls.y.append(y)
+        if not cls.sizeFixed:
+            if x > cls.w: cls.w = x
+            if y > cls.h: cls.h = y
 
-    def pos(self, args):
-        self.updatePos(args[0], args[1])
+    @classmethod
+    def pos(cls, args):
+        cls.updatePos(args[0], args[1])
 
-    def move(self, args):
-        self.updatePos(self.x[-1] + args[0], self.y[-1] + args[1])
+    @classmethod
+    def move(cls, args):
+        cls.updatePos(cls.x[-1] + args[0], cls.y[-1] + args[1])
 
-    def clean(self):
-        self.x = []
-        self.y = []
+    @classmethod
+    def clean(cls):
+        cls.x = []
+        cls.y = []
 
-    def size(self, args):
-        self.w = args[0]
-        self.h = args[1]
-        self.sizeFixed = True
+    @classmethod
+    def size(cls, args):
+        cls.w = args[0]
+        cls.h = args[1]
+        cls.sizeFixed = True
 
     #
     # Change color/stroke options
     #
 
-    def fill(self, args):
+    @classmethod
+    def fill(cls, args):
         if len(args) > 2:
             r = int(args[0])
             g = int(args[1])
             b = int(args[2])
             try: a = args[3]
             except: a = 1
-            self.options.add("fill", "rgba({},{},{},{})".format(r,g,b,a))
+            cls.options.add("fill", "rgba({},{},{},{})".format(r,g,b,a))
         else:
-            self.options.add("fill", args[0])
+            cls.options.add("fill", args[0])
 
-    def stroke(self, args):
+    @classmethod
+    def stroke(cls, args):
         # todo: dry
         if len(args) > 2:
             r = int(args[0])
@@ -105,33 +116,38 @@ class SvgWriter:
             b = int(args[2])
             try: a = args[3]
             except: a = 1
-            self.options.add("stroke", "rgba({},{},{},{})".format(r,g,b,a))
+            cls.options.add("stroke", "rgba({},{},{},{})".format(r,g,b,a))
         else:
-            self.options.add("stroke", args[0])
+            cls.options.add("stroke", args[0])
 
-    def width(self, arg):
-        self.options.add("stroke-width", arg[0])
+    @classmethod
+    def width(cls, arg):
+        cls.options.add("stroke-width", arg[0])
 
-    def nofill(self):
-        self.options.remove("fill")
+    @classmethod
+    def nofill(cls):
+        cls.options.remove("fill")
 
-    def nostroke(self):
-        self.options.remove("stroke")
-        self.options.remove("stroke-width")
+    @classmethod
+    def nostroke(cls):
+        cls.options.remove("stroke")
+        cls.options.remove("stroke-width")
 
     #
     # Write a new line in the svg
     #
 
-    def write(self, str):
-        self.svg += str + '\n'
+    @classmethod
+    def write(cls, str):
+        cls.svg += str + '\n'
 
     #
     # init
     #
 
-    def finish(self):
-        self.svg = '<?xml version="1.0" encoding="utf-8"?>\n' \
+    @classmethod
+    def finish(cls):
+        cls.svg = '<?xml version="1.0" encoding="utf-8"?>\n' \
                    '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="{}" height="{}">\n' \
-                       .format(self.w, self.h) + self.svg
-        self.write('</svg>')
+                       .format(cls.w, cls.h) + cls.svg
+        cls.write('</svg>')

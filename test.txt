@@ -15,7 +15,7 @@ while $x < 1920{
 
     pos($x, $y)
     $c = $x*255/1920
-    fill(0,$c,255-$c)
+    fill(255,$c,255-$c)
 
     ellipse(10)
 

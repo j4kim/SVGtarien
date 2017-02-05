@@ -14,7 +14,7 @@ functions = {
 }
 
 structures = {
-    'while', 'if', 'else', 'for'
+    'while', 'if', 'else'
 }
 
 tokens = (

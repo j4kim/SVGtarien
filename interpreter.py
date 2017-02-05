@@ -4,6 +4,8 @@ import AST
 from AST import addToClass
 from functools import reduce
 
+from svg_writer import SvgWriter as svg
+
 operations = {
     '+': lambda x, y: x + y,
     '-': lambda x, y: x - y,
@@ -25,19 +27,15 @@ vars = {}
 #
 
 @addToClass(AST.ProgramNode)
-def execute(self, writer):
+def execute(self):
     for c in self.children:
-        # todo: writer global ou singleton
-        if isinstance(c, AST.MethodNode) or isinstance(c, AST.WhileNode) or isinstance(c, AST.IfNode) or isinstance(c, AST.IfElseNode):
-            c.execute(writer)
-        else:
-            c.execute()
+        c.execute()
 
 
 @addToClass(AST.MethodNode)
-def execute(self, writer):
+def execute(self):
     # récupère une méthode de l'objet writer qui a le nom self.method
-    methodToCall = getattr(writer, self.method)
+    methodToCall = getattr(svg, self.method)
     if self.children:
         methodToCall(self.children[0].execute())  # children[0] contient le ArgumentNode
     else:
@@ -54,21 +52,21 @@ def execute(self):
 
 
 @addToClass(AST.WhileNode)
-def execute(self, writer):
+def execute(self):
     while self.children[0].execute():
-        self.children[1].execute(writer)
+        self.children[1].execute()
 
 @addToClass(AST.IfNode)
-def execute(self, writer):
+def execute(self):
     if self.children[0].execute():
-        self.children[1].execute(writer)
+        self.children[1].execute()
 
 @addToClass(AST.IfElseNode)
-def execute(self, writer):
+def execute(self):
     if self.children[0].execute():
-        self.children[1].execute(writer)
+        self.children[1].execute()
     else:
-        self.children[2].execute(writer)
+        self.children[2].execute()
 
 
 @addToClass(AST.TokenNode)
@@ -109,7 +107,6 @@ def execute(self):
 
 if __name__ == "__main__":
     from svg_parser import parse
-    from svg_writer import SvgWriter
     import sys
 
     try:
@@ -124,9 +121,8 @@ if __name__ == "__main__":
         sys.exit()
 
     ast = parse(prog)
-    writer = SvgWriter()
-    ast.execute(writer)
-    writer.finish()
+    ast.execute()
+    svg.finish()
 
     with open('output.svg', 'w') as f:
-        f.write(writer.svg)
+        f.write(svg.svg)
