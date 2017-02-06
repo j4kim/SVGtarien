@@ -1,4 +1,11 @@
-# intiialise image size
-$w = 1920
-$h = 1080
-size($w, $h)
+title("hello")
+size(800,600)
+
+fill(0,255,127)
+pos(200,200)
+ellipse(20)
+
+nofill()
+stroke(255,100,100)
+move(50,100)
+ellipse(30)

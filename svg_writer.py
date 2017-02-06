@@ -100,33 +100,29 @@ class SvgWriter:
     #
 
     @classmethod
-    def fill(cls, args):
+    def rgba(cls, attr, args):
         if len(args) > 2:
             r = int(args[0])
             g = int(args[1])
             b = int(args[2])
             try: a = args[3]
             except: a = 1
-            cls.options.add("fill", "rgba({},{},{},{})".format(r,g,b,a))
+            cls.options.add(attr, "rgba({},{},{},{})".format(r,g,b,a))
         else:
-            cls.options.add("fill", args[0])
+            cls.options.add(attr, args[0])
+
+
+    @classmethod
+    def fill(cls, args):
+        cls.rgba("fill", args)
+
+    @classmethod
+    def stroke(cls, args):
+        cls.rgba("fill", args)
 
     @classmethod
     def nofill(cls):
         cls.options.remove("fill")
-
-    @classmethod
-    def stroke(cls, args):
-        # todo: dry
-        if len(args) > 2:
-            r = int(args[0])
-            g = int(args[1])
-            b = int(args[2])
-            try: a = args[3]
-            except: a = 1
-            cls.options.add("stroke", "rgba({},{},{},{})".format(r,g,b,a))
-        else:
-            cls.options.add("stroke", args[0])
 
     @classmethod
     def nostroke(cls):
@@ -136,6 +132,11 @@ class SvgWriter:
     @classmethod
     def width(cls, arg):
         cls.options.add("stroke-width", arg[0])
+
+
+    #
+    # Transform options
+    #
 
     @classmethod
     def rotate(cls, arg):
