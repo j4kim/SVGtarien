@@ -48,21 +48,32 @@ class SvgWriter:
         cls.write('    <ellipse cx="{}" cy="{}" rx="{}" ry="{}" {}/>'.format(cls.x[-1], cls.y[-1], rx, ry, cls.options))
 
     @classmethod
-    def line(cls, *args):
+    def line(cls, args=None):
         list_point = ""
-        x = cls.x
-        y = cls.y
-        if args:  # If args is not empty.
-            if args[0][0] > 1:
-                for i in range(int(args[0][0])):
-                    list_point += (str(x[-i - 1]) + "," + str(y[-i - 1]) + " ")
-            else:
-                list_point += (str(x[-2]) + "," + str(y[-2]) + " " + str(x[-1]) + "," + str(y[-1]))
-
+        x, y = cls.x, cls.y
+        if args:
+            for i in range(int(args[0])):
+                list_point += "{},{} ".format(x[-i -1], y[-i -1])
         else:
-            for i in range(len(x)):
-                list_point += (str(x[-i - 1]) + "," + str(y[-i - 1]) + " ")
+            for x,y in zip(cls.x, cls.y):
+                list_point += "{},{} ".format(x,y)
         cls.write('    <polyline points="{}" {}/>'.format(list_point, cls.options))
+
+    @classmethod
+    def bezier(cls, args=None):
+        x, y = cls.x, cls.y
+
+        try: closepath = args[0]
+        except:closepath = False
+
+        try:
+            cls.write('    <path d="M {},{} Q {},{} {},{} {}" {} />'.format(
+                x[-3],y[-3], x[-2],y[-2], x[-1],y[-1],
+                'Z' if closepath else '',
+                cls.options
+            ))
+        except:
+            print("Vous devez définir trois points avant d'appeler la méthode bezier")
 
     #
     # move cursor
@@ -118,7 +129,7 @@ class SvgWriter:
 
     @classmethod
     def stroke(cls, args):
-        cls.rgba("fill", args)
+        cls.rgba("stroke", args)
 
     @classmethod
     def nofill(cls):

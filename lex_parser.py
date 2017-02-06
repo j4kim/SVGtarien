@@ -5,7 +5,7 @@ methods = (
     'size', 'title', 'desc',
     'fill', 'nofill', 'stroke', 'nostroke', 'width', 'font',
     'rotate', 'scale', 'notransform',
-    'rect', 'line', 'ellipse', 'text'
+    'rect', 'line', 'ellipse', 'text', 'bezier'
 )
 
 functions = {

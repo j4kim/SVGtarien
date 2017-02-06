@@ -8,8 +8,9 @@ smiley = {
 
     # mouth
     move(-20,10)
-    move(40,0)
-    line(2)
+    move(20,15)
+    move(20,-15)
+    bezier()
     move(-20,-10) # replace cursor in center
 
     # eyes
