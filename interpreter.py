@@ -53,9 +53,13 @@ def execute(self):
     sin = lambda args: math.sin(args[0])
     cos = lambda args: math.cos(args[0])
 
+    s = lambda args: str(args[0])
+    i = lambda args: int(args[0])
+
     funcToCall = locals()[self.f]
     if self.children:
-        return funcToCall(self.children[0].execute())
+        result = funcToCall(self.children[0].execute())
+        return result
     return funcToCall()
 
 
@@ -98,15 +102,26 @@ def execute(self):
 
 @addToClass(AST.AssignNode)
 def execute(self):
-    vars[self.children[0].tok] = self.children[1].execute()
+    if isinstance(self.children[1], AST.ProgramNode):
+        vars[self.children[0].name] = self.children[1]
+    else:
+        vars[self.children[0].name] = self.children[1].execute()
 
 
 @addToClass(AST.VariableNode)
 def execute(self):
     try:
-        return vars[self.tok]
+        return vars[self.name]
     except KeyError:
-        print("variable {} undefined !".format(self.tok))
+        print("variable {} undefined !".format(self.name))
+
+
+@addToClass(AST.RoutineNode)
+def execute(self):
+    try:
+        return vars[self.name].execute()
+    except KeyError:
+        print("variable {} undefined !".format(self.name))
 
 
 #

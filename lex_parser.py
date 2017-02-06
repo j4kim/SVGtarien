@@ -4,12 +4,13 @@ methods = (
     'pos', 'move', 'clean',
     'size', 'title', 'desc',
     'fill', 'nofill', 'stroke', 'nostroke', 'width', 'font',
+    'rotate', 'scale', 'notransform',
     'rect', 'line', 'ellipse', 'text'
 )
 
 functions = {
     'sin','cos','tan',
-    'str','int',
+    's','i',
     'rand'
 }
 

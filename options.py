@@ -6,6 +6,12 @@ class Options:
     def add(self, key, value):
         self.options[key] = value
 
+    def append(self, key, value):
+        if key in self.options:
+            self.options[key] += " " + value
+        else:
+            self.add(key, value)
+
     def remove(self, key):
         if key in self.options:
             del self.options[key]

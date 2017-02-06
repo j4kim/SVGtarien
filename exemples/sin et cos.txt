@@ -1,0 +1,50 @@
+# intiialise image size
+$w = 1920
+$h = 1080
+size($w, $h)
+
+$PI = 3.14159265359
+$xmax = 10
+$x = 0
+
+$bool = 1
+
+while $x < $xmax{
+
+    if($bool){
+        $y = -sin($x)+1
+        fill("red")
+    }else{
+        $y = -cos($x)+1
+        fill("blue")
+    }
+    pos($x*($w/$xmax), $y*($h/2))
+
+    ellipse(15)
+    $x = $x + 0.1
+
+    $bool = 1 - $bool
+}
+
+fill("black")
+
+# prints graduation on x axis
+
+pos(0,$h/2)
+text("0")
+
+pos(($PI/2)*($w/$xmax), $h/2)
+font(32)
+text("π/2")
+
+pos(($PI)*($w/$xmax), $h/2)
+font(32, "Sans-Serif")
+text("π")
+
+pos((3*$PI/2)*($w/$xmax), $h/2)
+font(32, "Cursive")
+text("3π/2")
+
+pos((2*$PI)*($w/$xmax), $h/2)
+font(32, "Fantasy")
+text("2π")

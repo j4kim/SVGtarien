@@ -1,0 +1,36 @@
+size(500,500)
+
+# instanciate a routine
+$smiley = {
+    # head
+    stroke("black")
+    width(2)
+    ellipse(40)
+
+    # mouth
+    move(-20,10)
+    move(40,0)
+    line(2)
+    move(-20,-10) # replace cursor in center
+
+    # eyes
+    nostroke()
+    fill("black")
+    move(-10,-10)
+    ellipse(4,8)
+    move(20,0)
+    ellipse(4,8)
+    move(-10,10)
+}
+
+pos(250,250)
+fill("yellow")
+$smiley()
+
+move(-50,-80)
+fill("violet")
+$smiley()
+
+move(100,40)
+fill("cyan")
+$smiley()

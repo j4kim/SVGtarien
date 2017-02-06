@@ -17,7 +17,8 @@ def p_programme_recursive(p):
 
 
 def p_statement(p):
-    ''' statement : method 
+    ''' statement : method
+        | routine
 		| assignation
 		| structure'''
     p[0] = p[1]
@@ -35,10 +36,13 @@ def p_structure_if(p):
     ''' structure : IF expression '{' programme '}' '''
     p[0] = AST.IfNode([p[2], p[4]])
 
-
 def p_assign(p):
     ''' assignation : VARIABLE '=' expression '''
     p[0] = AST.AssignNode([AST.VariableNode(p[1]), p[3]])
+
+def p_assign_routine(p):
+    ''' assignation : VARIABLE '=' '{' programme '}' '''
+    p[0] = AST.AssignNode([AST.VariableNode(p[1]), p[4]])
 
 def p_method(p):
     ''' method : METHODS '(' ')' '''
@@ -68,6 +72,19 @@ def p_expression(p):
     '''expression : NUMBER '''
     p[0] = AST.TokenNode(p[1])
 
+def p_expression_string(p):
+    '''expression : STRING '''
+    p[0] = AST.TokenNode(p[1])
+
+def p_expression_var(p):
+    ''' expression : VARIABLE '''
+    p[0] = AST.VariableNode(p[1])
+
+def p_routine(p):
+    ''' routine : VARIABLE
+        | VARIABLE '(' ')' '''
+    p[0] = AST.RoutineNode(p[1])
+
 def p_expression_func(p):
     '''expression : function'''
     p[0] = p[1]
@@ -88,14 +105,6 @@ def p_minus(p):
     '''expression : ADD_OP expression %prec UMINUS'''
     p[0] = AST.OpNode(p[1], [p[2]])
     # p[0] = AST.TokenNode(p[2])
-
-def p_expression_string(p):
-    '''expression : STRING '''
-    p[0] = AST.TokenNode(p[1])
-
-def p_assign_arguments(p):
-    ''' expression : VARIABLE '''
-    p[0] = AST.VariableNode(p[1])
 
 def p_error(p):
     if p:

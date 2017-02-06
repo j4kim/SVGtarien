@@ -42,8 +42,10 @@ class SvgWriter:
 
     @classmethod
     def ellipse(cls, args):
-        r = args[0]
-        cls.write('    <circle cx="{}" cy="{}" r="{}" {}/>'.format(cls.x[-1], cls.y[-1], r, cls.options))
+        rx = args[0]
+        try: ry = args[1]
+        except: ry=rx
+        cls.write('    <ellipse cx="{}" cy="{}" rx="{}" ry="{}" {}/>'.format(cls.x[-1], cls.y[-1], rx, ry, cls.options))
 
     @classmethod
     def line(cls, *args):
@@ -94,7 +96,7 @@ class SvgWriter:
         cls.sizeFixed = True
 
     #
-    # Change color/stroke options
+    # Change style options
     #
 
     @classmethod
@@ -110,6 +112,10 @@ class SvgWriter:
             cls.options.add("fill", args[0])
 
     @classmethod
+    def nofill(cls):
+        cls.options.remove("fill")
+
+    @classmethod
     def stroke(cls, args):
         # todo: dry
         if len(args) > 2:
@@ -123,17 +129,28 @@ class SvgWriter:
             cls.options.add("stroke", args[0])
 
     @classmethod
+    def nostroke(cls):
+        cls.options.remove("stroke")
+        cls.options.remove("stroke-width")
+
+    @classmethod
     def width(cls, arg):
         cls.options.add("stroke-width", arg[0])
 
     @classmethod
-    def nofill(cls):
-        cls.options.remove("fill")
+    def rotate(cls, arg):
+        cls.options.append("transform", "rotate({} {},{})".format(arg[0], cls.x[-1], cls.y[-1]))
 
     @classmethod
-    def nostroke(cls):
-        cls.options.remove("stroke")
-        cls.options.remove("stroke-width")
+    def scale(cls, args):
+        sx = args[0]
+        try: sy= args[1]
+        except: sy= sx
+        cls.options.append("transform", "scale({} {})".format(sx, sy))
+
+    @classmethod
+    def notransform(cls):
+        cls.options.remove("transform")
 
     #
     # Change font options

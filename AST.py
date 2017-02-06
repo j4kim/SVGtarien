@@ -42,8 +42,15 @@ class TokenNode(Node):
         return "{} ({})".format(self.tok, self.type)
 
 
-class VariableNode(TokenNode):
+class VariableNode(Node):
     type = 'variable'
+
+    def __init__(self, name):
+        Node.__init__(self)
+        self.name = name
+
+class RoutineNode(VariableNode):
+    type = 'routine'
 
 class OpNode(Node):
     def __init__(self, op, children):
