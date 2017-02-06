@@ -5,6 +5,7 @@ class SvgWriter:
     x = []
     y = []
     options = Options()
+    font_opt = Options()
     w = h = 0
     sizeFixed = False
 
@@ -18,7 +19,8 @@ class SvgWriter:
 
     @classmethod
     def text(cls, args):
-        cls.write('    <text x="{}" y="{}" {}>{}</text>'.format(cls.x[-1], cls.y[-1], cls.options, args[0]))
+        opt = cls.options.union(cls.font_opt)
+        cls.write('    <text x="{}" y="{}" {}>{}</text>'.format(cls.x[-1], cls.y[-1], opt, args[0]))
 
     @classmethod
     def rect(cls,args=None):
@@ -132,6 +134,17 @@ class SvgWriter:
     def nostroke(cls):
         cls.options.remove("stroke")
         cls.options.remove("stroke-width")
+
+    #
+    # Change font options
+    #
+
+    @classmethod
+    def font(cls, args):
+        cls.font_opt.add("font-size",args[0])
+        if len(args) > 1:
+            cls.font_opt.add("font-family",args[1])
+
 
     #
     # Write a new line in the svg

@@ -50,9 +50,7 @@ def execute(self):
         else:
             return random.randrange(*args)
 
-    def sin(args):
-        return math.sin(args[0])
-
+    sin = lambda args: math.sin(args[0])
     cos = lambda args: math.cos(args[0])
 
     funcToCall = locals()[self.f]

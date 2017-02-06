@@ -3,7 +3,7 @@ import ply.lex as lex
 methods = (
     'pos', 'move', 'clean',
     'size', 'title', 'desc',
-    'fill', 'nofill', 'stroke', 'nostroke', 'width',
+    'fill', 'nofill', 'stroke', 'nostroke', 'width', 'font',
     'rect', 'line', 'ellipse', 'text'
 )
 

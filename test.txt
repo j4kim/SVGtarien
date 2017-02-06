@@ -27,13 +27,24 @@ while $x < $xmax{
 }
 
 fill("black")
+
+# prints graduation on x axis
+
 pos(0,$h/2)
 text("0")
+
 pos(($PI/2)*($w/$xmax), $h/2)
+font(32)
 text("π/2")
+
 pos(($PI)*($w/$xmax), $h/2)
+font(32, "Sans-Serif")
 text("π")
+
 pos((3*$PI/2)*($w/$xmax), $h/2)
+font(32, "Cursive")
 text("3π/2")
+
 pos((2*$PI)*($w/$xmax), $h/2)
+font(32, "Fantasy")
 text("2π")
