@@ -1,6 +1,6 @@
 import random
 
-import AST
+import AST, math
 from AST import addToClass
 from functools import reduce
 
@@ -44,12 +44,21 @@ def execute(self):
 
 @addToClass(AST.FunctionNode)
 def execute(self):
-    if self.f == "rand":
-        if not self.children:
+    def rand(args=None):
+        if not args:
             return random.random()
         else:
-            args = self.children[0].execute()
             return random.randrange(*args)
+
+    def sin(args):
+        return math.sin(args[0])
+
+    cos = lambda args: math.cos(args[0])
+
+    funcToCall = locals()[self.f]
+    if self.children:
+        return funcToCall(self.children[0].execute())
+    return funcToCall()
 
 
 @addToClass(AST.WhileNode)

@@ -3,32 +3,37 @@ $w = 1920
 $h = 1080
 size($w, $h)
 
-# draw axis
-stroke("blue")
-pos($w/2,0)
-move(0,$h)
-line(2) # draw a line with the 2 last points
-pos(0,$h/2)
-move($w,0)
-line(2)
-clean() # clean positions history
+$PI = 3.14159265359
+$xmax = 10
+$x = 0
 
-$x = -2
-$y = 540
+$bool = 1
 
-while $x < 2{
+while $x < $xmax{
 
-    $y = 540+ ($x ^ 3)*100
+    if($bool){
+        $y = -sin($x)+1
+        fill("red")
+    }else{
+        $y = -cos($x)+1
+        fill("blue")
+    }
+    pos($x*($w/$xmax), $y*($h/2))
 
-    pos(($x+2)*($w/4), $y)
-    $c = $x*255/1920
-    fill(255,$c,255-$c)
-
-    ellipse(10)
-
+    ellipse(15)
     $x = $x + 0.1
+
+    $bool = 1 - $bool
 }
 
-fill("none")
-stroke("black")
-line()
+fill("black")
+pos(0,$h/2)
+text("0")
+pos(($PI/2)*($w/$xmax), $h/2)
+text("π/2")
+pos(($PI)*($w/$xmax), $h/2)
+text("π")
+pos((3*$PI/2)*($w/$xmax), $h/2)
+text("3π/2")
+pos((2*$PI)*($w/$xmax), $h/2)
+text("2π")
