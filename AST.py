@@ -49,7 +49,7 @@ class VariableNode(Node):
         Node.__init__(self)
         self.name = name
 
-class RoutineNode(VariableNode):
+class CallRoutineNode(VariableNode):
     type = 'routine'
 
 class OpNode(Node):
@@ -67,6 +67,9 @@ class OpNode(Node):
 
 class AssignNode(Node):
     type = '='
+
+class AssignRoutineNode(AssignNode):
+    pass
 
 class MethodNode(Node):
     type = 'method'

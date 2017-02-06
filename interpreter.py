@@ -102,11 +102,11 @@ def execute(self):
 
 @addToClass(AST.AssignNode)
 def execute(self):
-    if isinstance(self.children[1], AST.ProgramNode):
-        vars[self.children[0].name] = self.children[1]
-    else:
-        vars[self.children[0].name] = self.children[1].execute()
+    vars[self.children[0].name] = self.children[1].execute()
 
+@addToClass(AST.AssignRoutineNode)
+def execute(self):
+    vars[self.children[0].name] = self.children[1]
 
 @addToClass(AST.VariableNode)
 def execute(self):
@@ -116,12 +116,12 @@ def execute(self):
         print("variable {} undefined !".format(self.name))
 
 
-@addToClass(AST.RoutineNode)
+@addToClass(AST.CallRoutineNode)
 def execute(self):
     try:
         return vars[self.name].execute()
     except KeyError:
-        print("variable {} undefined !".format(self.name))
+        print("routine {} undefined !".format(self.name))
 
 
 #

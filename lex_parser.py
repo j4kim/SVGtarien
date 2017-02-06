@@ -19,7 +19,7 @@ structures = {
 }
 
 tokens = (
-    'METHODS', 'FUNCTIONS',
+    'METHODS', 'FUNCTIONS', 'ROUTINE',
     'NUMBER', 'STRING', 'VARIABLE',
     'ADD_OP', 'MUL_OP', 'MOD_OP', 'CONDITION_OP', 'POW_OP'
 ) + tuple(map(lambda s:s.upper(), structures))
@@ -55,14 +55,13 @@ def t_RESERVEDWORDS(t):
     r'[A-Za-z_]\w*'
     if t.value in methods:
         t.type = "METHODS"
-        return t
     elif t.value in functions:
         t.type = "FUNCTIONS"
-        return t
     elif t.value in structures:
         t.type = t.value.upper()
-        return t
-    print("Erreur lexicale: Le mot {} n'est pas connu".format(t.value))
+    else:
+        t.type = "ROUTINE"
+    return t
 
 def t_newline(t):
     r'\n+'

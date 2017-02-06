@@ -1,5 +1,5 @@
 # instanciate a routine
-$smiley = {
+smiley = {
     # head
     fill($color)
     stroke("black")
@@ -30,7 +30,7 @@ $color = "rgb(255,255,0)"
 while($i <= 1000){
     pos(rand($w),rand($h))
     rotate(rand(360))
-    $smiley()
+    smiley()
     notransform() # reinit trnasform attribute
     $i = $i + 1
 }
@@ -41,7 +41,7 @@ $x = 0
 while($x <= 2*$w){
     $y = $h + sin(3.14*4*$x/$w)*800
     pos($x,$y)
-    $smiley()
+    smiley()
     $x = $x + 20
 }
 
@@ -50,4 +50,4 @@ $scale = 5
 pos($w/($scale*2),$h/($scale*2))
 scale($scale)
 $color = "rgb(0,255,255)"
-$smiley()
+smiley()

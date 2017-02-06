@@ -41,8 +41,8 @@ def p_assign(p):
     p[0] = AST.AssignNode([AST.VariableNode(p[1]), p[3]])
 
 def p_assign_routine(p):
-    ''' assignation : VARIABLE '=' '{' programme '}' '''
-    p[0] = AST.AssignNode([AST.VariableNode(p[1]), p[4]])
+    ''' assignation : ROUTINE '=' '{' programme '}' '''
+    p[0] = AST.AssignRoutineNode([AST.VariableNode(p[1]), p[4]])
 
 def p_method(p):
     ''' method : METHODS '(' ')' '''
@@ -81,9 +81,8 @@ def p_expression_var(p):
     p[0] = AST.VariableNode(p[1])
 
 def p_routine(p):
-    ''' routine : VARIABLE
-        | VARIABLE '(' ')' '''
-    p[0] = AST.RoutineNode(p[1])
+    ''' routine : ROUTINE '(' ')' '''
+    p[0] = AST.CallRoutineNode(p[1])
 
 def p_expression_func(p):
     '''expression : function'''
