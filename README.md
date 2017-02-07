@@ -229,6 +229,31 @@ Output :
 
 ![sinus](http://svgshare.com/i/gq.svg)
 
+Example using `rand` and `i` :
+```
+$w = 870
+$h = 150
+size($w,$h)
+
+$x = 0
+while($x <= $w){
+    $y = rand($h)                      # choose a random vertical position
+    pos($x,$y)
+
+    $red = 255*$x/$w                   # set the red component relative to horizontal position
+    $green = 255 - $red                # the green component is the inverse
+    $blue = 255*$y/$h                  # set the blue component relative to vertical position
+    $alpha = rand()                    # the opacity is totally random
+    fill($red, $green, $blue, $alpha)
+
+    ellipse(i(25 - $alpha * 25))       # draw a circle with radius inversely proportional to its opacity
+    $x = $x + 1                        # iterate through each horizontal pixel
+}
+```
+
+Output :
+
+![random circles](http://svgshare.com/i/g7.svg)
 
 #### Routines
  
