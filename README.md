@@ -1,9 +1,9 @@
 # SVGtarien
 Revolutionnary progamming language and compiler to generate SVG files
 
-## Examples
+# Examples
 
-### Simple example
+## Simple example
 
 Input :
 ```
@@ -46,9 +46,9 @@ Output image :
 
 ![Simple example](http://svgshare.com/i/ek.svg)
 
-### Drawing
+## Drawing
 
-#### Setting state attributes
+### Setting state attributes
 
 Input :
 ```
@@ -75,7 +75,7 @@ Before calling a shape function, like `rect` or `line`, you need to set or move 
 
 The size of the drawing is automatically detect, you can also use the `size(w,h)` method.
 
-#### Rectangles
+### Rectangles
 
 Draw a square 150px wide starting in x=50, y=100  
 ```
@@ -95,7 +95,7 @@ pos(50,100)
 rect(150)
 ```
 
-#### Lines
+### Lines
 
 By default, the `line` method draws a polyline passing through all postitions in history. You can set a parameter to the `line` method that defines the number of points used to draw the line. You can also use the `clean` method to reset the position history.
 
@@ -127,7 +127,7 @@ Output :
 
 ![lines](http://svgshare.com/i/en.svg)
 
-#### Circles and ellipses
+### Circles and ellipses
 
 Draw a 5px radius circle centered in x=30,y=60
 ```
@@ -140,7 +140,7 @@ pos(30,60)
 ellipse(5,12)
 ```
 
-#### Bézier curves
+### Bézier curves
 
 The `bezier` method allows you to draw [quardatic bezier curves](https://upload.wikimedia.org/wikipedia/commons/3/3d/B%C3%A9zier_2_big.gif) using the 3 last points in history.
 
@@ -168,35 +168,47 @@ Output :
 
 ![Bezier](http://svgshare.com/i/gp.svg)
 
-#### Text
+You can add a parameter to the `bezier` method if you want the curve to be closed : `bezier(1)` :
 
-#### Advanced attributes
+![Closed bezier](http://svgshare.com/i/g8.svg)
+
+### Text
+
+### Advanced attributes
 
 rotate
 scale
 notransform
 
-### Programming elements
+## Programming elements
 
-#### Variables
+### Variables
 
 Variables are prefixed with `$`. You can define a variable like this : `$x = 12`
 
-#### if else statements
+### if else statements
 
-#### Loops
+### Loops
 
-Draws 10 circles of radius 40, spaced by 100 pixels
+Draws 10 circles of radius 20, spaced by 80 pixels
 ```
-pos(0, 200)
-$x = 0
-while ($x < 10){
-	posx($x * 100)
-	ellipse(40)
+size(870,150)
+
+pos(0, 75)
+
+$i = 0
+while ($i < 10){
+    move(80,0)
+    ellipse(20)
+    $i = $i + 1
 }
 ```
 
-#### Built-in functions
+Output :
+
+![10 cercles](http://svgshare.com/i/gJ.svg)
+
+### Built-in functions
 
 There is a few built-in functions you may need to use :
 * Trigonometric functions : `sin`, `cos`, `tan` takes a radian angle as parameter
@@ -210,8 +222,8 @@ There is a few built-in functions you may need to use :
 Example using `sin` :
 ```
 $w = 870
-$h = 300
-size(870,300)
+$h = 150
+size($w,$h)
 
 $PI = 3.14159265359
 $x = 0
@@ -255,7 +267,7 @@ Output :
 
 ![random circles](http://svgshare.com/i/g7.svg)
 
-#### Routines
+### Routines
  
 ```
 function drawCircle($x, $y, $r){
