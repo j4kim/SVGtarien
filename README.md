@@ -1,5 +1,42 @@
 # SVGtarien
-Revolutionnary progamming language and compiler to generate SVG files
+Revolutionnary progamming language and compiler for [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics) images generation.  
+The compiler is made in Python 3 and uses [ply](http://www.dabeaz.com/ply/ply.html) (Python [Lex](https://en.wikipedia.org/wiki/Lex_(software)) and [Yacc](https://en.wikipedia.org/wiki/Yacc)).
+
+Our language is based on states. Most of the drawing attributes are set globally using specific methods.  
+That means, for example, to draw two circles with the same attributes, you won't write :
+```
+circle(x=20, y=30, radius=10, stroke-width=2, stroke-color='black', fill="red")
+circle(x=80, y=30, radius=10, stroke-width=2, stroke-color='black', fill="red")
+
+# only the x position has changed, but the lines are mostly repetitive -> bad
+```
+
+But you will write :
+```
+pos(20,30)
+width(2)
+stroke("black")
+fill("red")
+ellipse(10) # draw a circle with previous set attributes
+move(60,0)  # change the position state
+ellipse(20) # draw a circle with previous set attributes, but at the new position
+
+# more lines, but no repetitons -> good
+```
+
+By doing so, we aim to simplify SVG images generation avoiding its verbosity.  
+
+The language provides a few methods for writing elements in the SVG file and for changing the attributes of those elements.  
+* Drawing methods
+    * `rect`, `line`, `ellipse`, `text`, `bezier`
+* Attributes modification methods :
+    * `fill`, `nofill`, `stroke`, `nostroke`, `width`, `font`, `rotate`, `scale`, `notransform`
+* Position state methods :
+    * `pos`, `move`, `clean`
+* Special methods :
+    * `size`, `title`, `desc`
+
+See examples below to learn more about the language.
 
 # Examples
 
@@ -173,6 +210,8 @@ You can add a parameter to the `bezier` method if you want the curve to be close
 ![Closed bezier](http://svgshare.com/i/g8.svg)
 
 ### Text
+
+You can custom texts using the `font` method.
 
 ### Advanced attributes
 
