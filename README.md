@@ -17,9 +17,9 @@ pos(20,30)
 width(2)
 stroke("black")
 fill("red")
-ellipse(10) # draw a circle with previous set attributes
+ellipse(10) # draw a circle with previously set attributes
 move(60,0)  # change the position state
-ellipse(20) # draw a circle with previous set attributes, but at the new position
+ellipse(20) # draw a circle with previously set attributes, but at the new position
 
 # more lines, but no repetitons -> good
 ```
@@ -211,7 +211,33 @@ You can add a parameter to the `bezier` method if you want the curve to be close
 
 ### Text
 
-You can custom texts using the `font` method.
+You can custom texts using the `font` method : 
+```
+size(870,150)
+
+pos(20,20)
+text("SVGtarien")
+
+move(150,30)
+font(32)
+text("is really")
+
+move(150,30)
+font(32, "Sans-serif")
+text("amazing")
+
+move(150,30)
+font(32, "cursive")
+text("powerful")
+
+move(150,30)
+font(32, "fantasy")
+text("revolutionnary !")
+``` 
+
+Output :
+
+![fonts](http://svgshare.com/i/f5.svg)
 
 ### Advanced attributes
 
