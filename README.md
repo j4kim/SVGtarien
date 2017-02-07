@@ -341,16 +341,16 @@ Output :
 
 ### Built-in functions
 
-There is a few built-in functions you may need to use :
+There is a few functions you may need to use :
 * Trigonometric functions : `sin`, `cos`, `tan` takes a radian angle as parameter
-* Casting : `s` for string and `i` for integer (by default, all numbers are float)
-* Pseudo-random generator : `rand` accept 0, 1 or 2 parameters
+* Conversion : `s` for string and `i` for integer (by default, all numbers are float)
+* Pseudo-random numbers generator : `rand` accept 0, 1 or 2 parameters
     * `rand()` returns a floating points number between 0 and 1 (excluded)
     * `rand(12)` returns a integer between 0 and 11
     * `rand(-12, 12)` returns a integer between -12 and 11
 * Debugging : the `debug` function may help, it just prints the arguments given values in the console.
 
-Example using `sin` :
+Example using `sin`, `s` and `debug` :
 ```
 $w = 870
 $h = 150
@@ -359,13 +359,17 @@ size($w,$h)
 $PI = 3.14159265359
 $x = 0
 while($x <= $w){
-    $y = $h/2 - sin($PI*4*$x/$w) * $h/2
+    $norm_x = $PI * 4 * $x / $w         # normalize x so it varies between 0 and 4π (two periods)
+    $y = sin($norm_x)                   # compute the sinus of this 
+    debug("sin("+s($norm_x)+") =", $y)  # prints the raw value of y [-1, 1] in the console
+    					# note that we need to convert $norm_x before concatenate it to a string
+    $y = $h/2 - $y * $h/2               # y-shift and amplification relatively to the image height
     pos($x,$y)
     $x = $x + 10
 }
 stroke("black")
 fill("none")
-line()
+line()                                  # draw a line passing through the 87 positions set
 ```
 
 Output :
@@ -407,6 +411,8 @@ Input :
 ```
 size(870,150)
 
+# define a new routine that draws a smiley using the $color variable.
+# of course $color must be define before calling this routine
 drawSmiley = {
     # head
     fill($color)
