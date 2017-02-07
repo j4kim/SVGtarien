@@ -211,7 +211,9 @@ You can add a parameter to the `bezier` method if you want the curve to be close
 
 ### Text
 
-You can custom texts using the `font` method : 
+You can custom texts using the `font` method. The first argument is the new font size. The optionnal second argument is a CSS font family name like `Times` or `Helvetica` or a generic name like `serif`, `monospace` etc... (see [font-family](https://developer.mozilla.org/fr/docs/Web/CSS/font-family) on the MDN).
+
+Input :  
 ```
 size(870,150)
 
@@ -239,11 +241,43 @@ Output :
 
 ![fonts](http://svgshare.com/i/f5.svg)
 
-### Advanced attributes
+### Transform attributes
 
-rotate
-scale
-notransform
+Everything you draw can be scaled and rotated.
+
+Input :
+```
+size(400,150)
+
+# black text
+pos(50,50)
+text("SVGtarien")
+
+# green text
+rotate(45)         # rotate by 45 degrees in clockwise direction
+                   # the rotation point is the last position (50,50)
+fill("blue")
+text("SVGtarien")
+
+# blue square
+notransform()      # reinitialize the transform attribute
+                   # otherwise next transformations will be added to previous ones
+pos(150,100)
+rect(30)
+
+# red rectangle
+pos(50,50)
+rotate(-20)       # rotate by 20 degrees in anticlockwise direction
+scale(3,2)        # everything will be expanded 3 times horizontally and 2 times vertically
+                  # including positions -> (50,50) will be (150,100)
+fill("red")
+rect(30)
+```
+
+Output :
+
+![rotation and scaling](http://svgshare.com/i/fr.svg)
+
 
 ## Programming elements
 
@@ -251,11 +285,43 @@ notransform
 
 Variables are prefixed with `$`. You can define a variable like this : `$x = 12`
 
+### Mathematical oprators
+
+You can use these mathematical operators : `+`, `-`, `*`, `/`, `%` (modulo) and `^` (power)
+
 ### if else statements
+
+Like in other programming languages. The most common comparison operators are supported : `==`, `!=`, `<`, `>`, `<=` and `>=`.
+You can also pass a value in the condition, everything except `0` is true. `if 1 { #executed } else{ #not executed } 
+
+Input : 
+```
+size(870,150)
+
+$x = 10
+while($x <= 870){
+    pos($x, 10)
+    # if x is even
+    if($x % 2 == 0){
+        fill("red")
+    }else{
+        fill("blue")
+    }
+    rect(50)
+    $x = $x + 75
+}
+```
+
+Output :
+
+![red and blue squares](http://svgshare.com/i/fW.svg)
+
 
 ### Loops
 
-Draws 10 circles of radius 20, spaced by 80 pixels
+You can loop using the `while` statement.
+
+Draw 10 circles of radius 20, spaced by 80 pixels :
 ```
 size(870,150)
 
