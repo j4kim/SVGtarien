@@ -289,6 +289,28 @@ Variables are prefixed with `$`. You can define a variable like this : `$x = 12`
 
 You can use these mathematical operators : `+`, `-`, `*`, `/`, `%` (modulo) and `^` (power)
 
+### Loops
+
+You can loop using the `while` statement.
+
+Draw 10 circles of radius 20, spaced by 80 pixels :
+```
+size(870,150)
+
+pos(0, 75)
+
+$i = 0
+while ($i < 10){
+    move(80,0)
+    ellipse(20)
+    $i = $i + 1
+}
+```
+
+Output :
+
+![10 cercles](http://svgshare.com/i/gJ.svg)
+
 ### if else statements
 
 Like in other programming languages. The most common comparison operators are supported : `==`, `!=`, `<`, `>`, `<=` and `>=`.
@@ -316,28 +338,6 @@ Output :
 
 ![red and blue squares](http://svgshare.com/i/fW.svg)
 
-
-### Loops
-
-You can loop using the `while` statement.
-
-Draw 10 circles of radius 20, spaced by 80 pixels :
-```
-size(870,150)
-
-pos(0, 75)
-
-$i = 0
-while ($i < 10){
-    move(80,0)
-    ellipse(20)
-    $i = $i + 1
-}
-```
-
-Output :
-
-![10 cercles](http://svgshare.com/i/gJ.svg)
 
 ### Built-in functions
 
