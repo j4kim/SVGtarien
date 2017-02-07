@@ -43,6 +43,7 @@ Output code :
 ```
 
 Output image :  
+
 ![Simple example](http://svgshare.com/i/ek.svg)
 
 ### Drawing
@@ -96,45 +97,35 @@ rect(150)
 
 #### Lines
 
-Draw à line passing through 3 points
-```
-pos(200,300)
-pos(100,350)
-pos(150,350)
-line()
-```
-Same thing using relative position
-```
-pos(200,300)
-move(-100,50)
-movex(50)
-line()
-```
-
-By default `line` draws a polyline passing through all postitions in history. You can set a parameter to the `line` method that defines the number of points used to draw the line. You can also use the `clean` method to reset the position history.
+By default, the `line` method draws a polyline passing through all postitions in history. You can set a parameter to the `line` method that defines the number of points used to draw the line. You can also use the `clean` method to reset the position history.
 
 Input :
 ```
-fill("none")
-pos(0,0)
-move(50,20)
-move(30,60)
-line()
+fill("none")      # by default, polylines are filled, you must set this if you juste want lines
+stroke("black")   # you must also define a stroke color
+width(8)          # set the stroke-width attribute
 
-move(200,-30)
+pos(0,0)          # history : [(0,0)]
+move(50,20)       # history : [(0,0),(50,20)] 
+move(30,60)       # history : [(0,0),(50,20),(80,80)]
+line()            # draw a line passing through the 3 points in history
+
+width(4)
+move(100,-30)    # history : [(0,0),(50,20),(80,80),(180,50)]
 stroke("red")
-line(2)
+line(3)          # draw a red line using the 3 last positions in history
 
-clean()
-pos(300,100)
-move(-100,50)
+clean()          # history : []
+pos(300,100)     # history : [(300,100)]
+move(-100,50)    # history : [(300,100),(200,150)]
+move(0,20)       # history : [(300,100),(200,150),(300,170)]
 stroke("blue")
-line()
+line()           # draw a line passing through the 3 points in history
 ```
 
 Output :  
 
-![lines](http://svgshare.com/i/gH.svg)
+![lines](http://svgshare.com/i/en.svg)
 
 #### Circles and ellipses
 
@@ -150,6 +141,32 @@ ellipse(5,12)
 ```
 
 #### Bézier curves
+
+The `bezier` method allows you to draw [quardatic bezier curves](https://upload.wikimedia.org/wikipedia/commons/3/3d/B%C3%A9zier_2_big.gif) using the 3 last points in history.
+
+Input :
+```
+size(300,150)   # fix the image size
+
+fill("red")
+
+pos(50,30)
+ellipse(10)     # first control point at (50,30)
+move(50,100)
+ellipse(10)     # second control point at (100,130)
+move(180,-80)
+ellipse(10)     # third control point at (280,50)
+
+fill("none")    # I don't want to fill my bezier curve
+stroke("black") # it wont appear if it has no stroke
+width(5)
+
+bezier()        # draw a bezier curve using the 3 control points
+```
+
+Output :  
+
+![Bezier](http://svgshare.com/i/gp.svg)
 
 #### Text
 
