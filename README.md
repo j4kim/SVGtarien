@@ -362,7 +362,7 @@ while($x <= $w){
     $norm_x = $PI * 4 * $x / $w         # normalize x so it varies between 0 and 4π (two periods)
     $y = sin($norm_x)                   # compute the sinus of this 
     debug("sin("+s($norm_x)+") =", $y)  # prints the raw value of y [-1, 1] in the console
-    					# note that we need to convert $norm_x before concatenate it to a string
+                                        # note that we need to convert $norm_x before concatenate it to a string
     $y = $h/2 - $y * $h/2               # y-shift and amplification relatively to the image height
     pos($x,$y)
     $x = $x + 10
