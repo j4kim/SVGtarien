@@ -458,3 +458,52 @@ drawSmiley()
 Output :
 
 ![Smileys](http://svgshare.com/i/fH.svg)
+
+Here is anothoer exemple featuring a simple console imitation :
+
+```
+$w = 870
+$h = 150
+size($w,$h)
+
+font(14, "monospace")
+
+$cpt = 0
+# this routine prints the $text variable in a new line on the top-left corner
+debugTxt = {
+    pos(0, $cpt*20)
+    fill("black")
+    rect(250,20)
+    fill("white")
+    move(10,12)
+    text($text)
+    $cpt = $cpt + 1
+}
+
+$text = "Console"
+debugTxt()
+
+$i = 0
+while($i < 6){
+    # choose a random color red or blue
+    if (rand() < 0.5){ $color = "blue" }
+    else{ $color = "red" }
+    fill($color)
+
+    # set a random position
+    $x = rand(270, $w-20)
+    $y = rand(20, $h-20)
+    pos($x,$y)
+
+    ellipse(20)
+
+    $text = $color + " circle drawn at (" + s($x) + "," + s($y) + ")"
+    debugTxt()
+
+    $i = $i + 1
+}
+```
+
+Output :
+
+![console](http://svgshare.com/i/gh.svg)
