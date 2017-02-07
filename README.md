@@ -178,6 +178,10 @@ notransform
 
 ### Programming elements
 
+#### Variables
+
+Variables are prefixed with `$`. You can define a variable like this : `$x = 12`
+
 #### if else statements
 
 #### Loops
@@ -194,7 +198,37 @@ while ($x < 10){
 
 #### Built-in functions
 
-sin cos tan s i rand
+There is a few built-in functions you may need to use :
+* Trigonometric functions : `sin`, `cos`, `tan` takes a radian angle as parameter
+* Casting : `s` for string and `i` for integer (by default, all numbers are float)
+* Pseudo-random generator : `rand` accept 0, 1 or 2 parameters
+    * `rand()` returns a floating points number between 0 and 1 (excluded)
+    * `rand(12)` returns a integer between 0 and 11
+    * `rand(-12, 12)` returns a integer between -12 and 11
+* Debugging : the `debug` function may help, it just prints the arguments given values in the console.
+
+Example using `sin` :
+```
+$w = 870
+$h = 300
+size(870,300)
+
+$PI = 3.14159265359
+$x = 0
+while($x <= $w){
+    $y = $h/2 - sin($PI*4*$x/$w) * $h/2
+    pos($x,$y)
+    $x = $x + 10
+}
+stroke("black")
+fill("none")
+line()
+```
+
+Output :
+
+![sinus](http://svgshare.com/i/gq.svg)
+
 
 #### Routines
  
