@@ -399,10 +399,56 @@ Output :
 ![random circles](http://svgshare.com/i/g7.svg)
 
 ### Routines
+
+You can define your own routines. A routine takes no arguments and returns no values. It just may help execute repetitve tasks. Like very variable is global, you can use them to modify the behavior of the routine. Results can also be stored in varibales.
+
+Input :
  
 ```
-function drawCircle($x, $y, $r){
-	pos($x, $y)
-	ellipse($r)
+size(870,150)
+
+drawSmiley = {
+    # head
+    fill($color)
+    stroke("black")
+    width(2)
+    ellipse(40)
+
+    # mouth
+    move(-20,10)
+    move(40,0)
+    line(2)
+    move(-20,-10) # replace cursor in center
+
+    # eyes
+    nostroke()
+    fill("black")
+    move(-10,-10)
+    ellipse(4,8)
+    move(20,0)
+    ellipse(4,8)
+    move(-10,10) # replace cursor in center
 }
+
+$color = "yellow"
+pos(75,75)
+drawSmiley()
+
+$color = "pink"
+move(100,0)
+rotate(20)
+drawSmiley()
+
+notransform()
+scale(2)
+$color = "cyan"
+drawSmiley()
+
+move(100,-50)
+$color = "none"
+drawSmiley()
 ```
+
+Output :
+
+![Smileys](http://svgshare.com/i/fH.svg)
