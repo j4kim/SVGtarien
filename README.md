@@ -24,7 +24,7 @@ ellipse(20) # draw a circle with previously set attributes, but at the new posit
 move(20,0)
 ellipse(20)
 
-# more lines, but no repetitons -> good
+# more lines, but less repetitons -> good
 ```
 
 By doing so, we aim to simplify SVG images generation avoiding its verbosity.  
@@ -52,7 +52,7 @@ desc("Cette figure est constituée d'un rectangle, d'un segment de droite et d'u
 
 pos(0, 70)           # set the pointer at x=0, y=70
 fill("green")        # set the fill color state to green
-move(100, 80)        # move the pointer to 100,80
+move(100, 80)        # move the pointer to (0+100,70+80) = (100,150)
 rect()               # draw a rectangle from the penultimate position to the last position
 pos(5, 5)
 move(245, 90)
@@ -61,7 +61,7 @@ stroke("red")        # set the stroke color to red
 line(2)	             # draw a line linking the two last positions set
 pos(90, 80)
 width(4)             # set the stoke-width attribute to 4 pixels
-ellipse(50)          # draw a 5-radius circle
+ellipse(50)          # draw a 50px-radius circle
 pos(180, 60)
 text("Un texte")
 ```
@@ -96,13 +96,13 @@ pos(100,50)               # set postion cursor at x=100 and y=50
 fill("red")               # set the fill color of next elements to red
 stroke("#ffff00")         # set the stroke color of next elements to yellow using hexadecimal notation
 width(5)                  # set the stroke width
-rect(75)                  # draw a 75px red square with a 5px yellow stroke
+rect(75)                  # draw a 75px red square starting at (100,50) with a 5px yellow stroke
 
 nostroke()                # reset the stroke attributes (color and width)
 fill(0, 0, 255, 0.5)      # set the fill color to semi-transparent-blue using rgba notation
-move(200, 0)              # move the postition cursor by 200px to the right, new position is 300,50
-move(50,200)              # new position is 350,250
-rect()                    # draw a semi-transparent-blue rectangle with no stroke
+move(200, 0)              # move the postition cursor by 200px to the right, new position is (300,50)
+move(50,200)              # new position is (350,250)
+rect()                    # draw a semi-transparent-blue rectangle with no stroke from (300,50) to (350,250)
 ```
 
 Output :  
@@ -113,37 +113,62 @@ Shapes are drawn using the current attributes (state) of the program.
 The position and size of the shape you draw is defined by the last positions you set.
 Before calling a shape function, like `rect` or `line`, you need to set or move the position pointer 2 times.
 
-The size of the SVG image is automatically detect, you can also use the `size(w,h)` method to set it.
+The size of the SVG image is automatically detect, you can also use the `size(w,h)` method to fix it.
 
-### Rectangles
+### Squares and Rectangles
 
-Draw a square 150px wide starting in x=50, y=100  
+The `rect` method accepts 0, 1 or 2 parameters. If no parameters is passed, the rectangle is drawn using the two last positions in the history.
+
+Input :
 ```
-pos(50,100)
-pos(200,250)
-rect()
+size(300, 150)  # fix the image size
+
+pos(20,20)
+pos(150,100)
+fill("red")
+rect()          # draw a red rectangle from (20,20) to (150,100)
+
+rect(50)        # draw a 50px-wide red square starting at (150,100)
+
+fill("none")
+stroke("blue")
+rect(100,20)    # draw a 20x100 blue frame starting at (150,100)
 ```
-Same thing using relative position
+
+Output : 
+
+![squares](http://svgshare.com/i/ff.svg)
+
+### Circles and ellipses
+
+The `ellipse` method accepts 1 or 2 paramters. An ellipse with one parameter is a circle.
+
+Input :
 ```
-pos(50,100)
-move(150,150)
-rect()
+size(300, 150)  # fix the image size
+
+pos(150,75)     # postition at the center
+
+fill("red")
+ellipse(50)     # draw a red circle
+
+fill("blue")
+ellipse(80,20)  # draw a blue ellipse centered on the same point
 ```
-Same thing using a parameter passed in `rect` method
-```
-pos(50,100)
-rect(150)
-```
+
+Output : 
+
+![ellipses](http://svgshare.com/i/f9.svg)
 
 ### Lines
 
-By default, the `line` method draws a polyline passing through all postitions in history. However, you can set a parameter to the `line` method that defines the number of points used to draw the line. You can also use the `clean` method to reset the position history.
+By default, the `line` method draws a polyline passing through all postitions in history. However, you can pass a parameter to the `line` method that defines the number of points used to draw the line. You can also use the `clean` method to reset the position history.
 
 Input :
 ```
 fill("none")      # by default, polylines are filled, you must set this if you juste want lines
-stroke("black")   # you must also define a stroke color
-width(8)          # set the stroke-width attribute
+stroke("black")   # you must also define a stroke color, otherwise you won't see anything
+width(10)         # set the stroke-width attribute
 
 pos(0,0)          # history : [(0,0)]
 move(50,20)       # history : [(0,0),(50,20)] 
@@ -160,25 +185,12 @@ pos(300,100)     # history : [(300,100)]
 move(-100,50)    # history : [(300,100),(200,150)]
 move(0,20)       # history : [(300,100),(200,150),(300,170)]
 stroke("blue")
-line()           # draw a line passing through the 3 points in history
+line()           # draw a line passing through all the 3 points in history
 ```
 
 Output :  
 
 ![lines](http://svgshare.com/i/en.svg)
-
-### Circles and ellipses
-
-Draw a 5px radius circle centered in x=30,y=60
-```
-pos(30,60)
-ellipse(5)
-```
-Draw an ellipse centered in (30,60), with x-radius=5 and y-radius=12
-```
-pos(30,60)
-ellipse(5,12)
-```
 
 ### Bézier curves
 
@@ -197,8 +209,8 @@ ellipse(10)     # second control point at (100,130)
 move(180,-80)
 ellipse(10)     # third control point at (280,50)
 
-fill("none")    # I don't want to fill my bezier curve
-stroke("black") # it wont appear if it has no stroke
+fill("none")    # I don't want my bezier curve to be filled
+stroke("black") # it won't appear if it has no stroke
 width(5)
 
 bezier()        # draw a bezier curve using the 3 control points
@@ -316,7 +328,7 @@ Output :
 
 ### if else statements
 
-Like in other programming languages. The most common comparison operators are supported : `==`, `!=`, `<`, `>`, `<=` and `>=`.
+Similar to other programming languages. The most common comparison operators are supported : `==`, `!=`, `<`, `>`, `<=` and `>=`.
 You can also pass a value in the condition, everything except `0` is true. `if 1 { #executed } else { #not executed }` 
 
 Input : 
@@ -351,7 +363,7 @@ There is a few provided functions you may need to use :
     * `rand()` returns a floating point number between 0 and 1 (excluded)
     * `rand(12)` returns a integer between 0 and 11
     * `rand(-12, 12)` returns a integer between -12 and 11
-* Debugging : the `debug` function may help, it just prints the arguments given values in the console.
+* Debugging : the `debug` function may help, it just prints the given arguments values in the console.
 
 Example using `sin`, `s` and `debug` :
 ```
@@ -501,6 +513,7 @@ while($i < 6){
 
     ellipse(20)
 
+    # print a debug message in the pseudo-console
     $text = $color + " circle drawn at (" + s($x) + "," + s($y) + ")"
     debugTxt()
 
