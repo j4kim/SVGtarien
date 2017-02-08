@@ -226,7 +226,7 @@ You can add a parameter to the `bezier` method if you want the curve to be close
 
 ### Text
 
-You can custom texts using the `font` method. The first argument is the new font size. The optionnal second argument is a CSS font family name like `Times` or `Helvetica` or a generic name like `serif`, `monospace` etc... (see [font-family](https://developer.mozilla.org/fr/docs/Web/CSS/font-family) on the MDN).
+You can customise texts using the `font` method. The first argument is the new font size. The optionnal second argument is a CSS font family name like `Times` or `Helvetica` or a generic name like `serif`, `monospace` etc... (see [font-family](https://developer.mozilla.org/fr/docs/Web/CSS/font-family) on the MDN).
 
 Input :  
 ```
@@ -268,11 +268,11 @@ size(400,150)
 pos(50,50)
 text("SVGtarien")
 
-# green text
+# blue text
 rotate(45)         # rotate by 45 degrees in clockwise direction
                    # the rotation point is the last position (50,50)
 fill("blue")
-text("SVGtarien")
+text("Est-ce végétarien ?")
 
 # blue square
 notransform()      # reinitialize the transform attribute
@@ -291,7 +291,7 @@ rect(30)
 
 Output :
 
-![rotation and scaling](http://svgshare.com/i/fr.svg)
+![rotation and scaling](http://svgshare.com/i/hB.svg)
 
 
 ## Programming elements
@@ -475,7 +475,7 @@ Output :
 ![Smileys](http://svgshare.com/i/fH.svg)
 
 
-Here is another exemple featuring a simple console imitation :
+Here is another routine exemple featuring a simple console imitation :
 
 ```
 $w = 870
