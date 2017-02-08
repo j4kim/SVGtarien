@@ -1,6 +1,7 @@
 from options import Options
 
 class SvgWriter:
+
     svg = ""
     x = []
     y = []
@@ -9,18 +10,22 @@ class SvgWriter:
     w = h = 0
     sizeFixed = False
 
+
     @classmethod
     def title(cls, args):
         cls.write('    <title>{}</title>'.format(args[0]))
+
 
     @classmethod
     def desc(cls, args):
         cls.write('    <desc>{}</desc>'.format(args[0]))
 
+
     @classmethod
     def text(cls, args):
         opt = cls.options.union(cls.font_opt)
         cls.write('    <text x="{}" y="{}" {}>{}</text>'.format(cls.x[-1], cls.y[-1], opt, args[0]))
+
 
     @classmethod
     def rect(cls,args=None):
@@ -40,12 +45,14 @@ class SvgWriter:
 
         cls.write('    <rect x="{}" y="{}" width="{}" height="{}" {}/>'.format(x1, y1, w, h, cls.options))
 
+
     @classmethod
     def ellipse(cls, args):
         rx = args[0]
         try: ry = args[1]
         except: ry=rx
         cls.write('    <ellipse cx="{}" cy="{}" rx="{}" ry="{}" {}/>'.format(cls.x[-1], cls.y[-1], rx, ry, cls.options))
+
 
     @classmethod
     def line(cls, args=None):
@@ -58,6 +65,7 @@ class SvgWriter:
             for x,y in zip(cls.x, cls.y):
                 list_point += "{},{} ".format(x,y)
         cls.write('    <polyline points="{}" {}/>'.format(list_point, cls.options))
+
 
     @classmethod
     def bezier(cls, args=None):
@@ -87,18 +95,22 @@ class SvgWriter:
             if x > cls.w: cls.w = x
             if y > cls.h: cls.h = y
 
+
     @classmethod
     def pos(cls, args):
         cls.updatePos(args[0], args[1])
+
 
     @classmethod
     def move(cls, args):
         cls.updatePos(cls.x[-1] + args[0], cls.y[-1] + args[1])
 
+
     @classmethod
     def clean(cls):
         cls.x = []
         cls.y = []
+
 
     @classmethod
     def size(cls, args):
@@ -127,18 +139,22 @@ class SvgWriter:
     def fill(cls, args):
         cls.rgba("fill", args)
 
+
     @classmethod
     def stroke(cls, args):
         cls.rgba("stroke", args)
+
 
     @classmethod
     def nofill(cls):
         cls.options.remove("fill")
 
+
     @classmethod
     def nostroke(cls):
         cls.options.remove("stroke")
         cls.options.remove("stroke-width")
+
 
     @classmethod
     def width(cls, arg):
@@ -153,12 +169,14 @@ class SvgWriter:
     def rotate(cls, arg):
         cls.options.append("transform", "rotate({} {},{})".format(arg[0], cls.x[-1], cls.y[-1]))
 
+
     @classmethod
     def scale(cls, args):
         sx = args[0]
         try: sy= args[1]
         except: sy= sx
         cls.options.append("transform", "scale({} {})".format(sx, sy))
+
 
     @classmethod
     def notransform(cls):

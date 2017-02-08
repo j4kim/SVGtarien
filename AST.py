@@ -49,8 +49,10 @@ class VariableNode(Node):
         Node.__init__(self)
         self.name = name
 
+
 class CallRoutineNode(VariableNode):
     type = 'routine'
+
 
 class OpNode(Node):
     def __init__(self, op, children):
@@ -68,8 +70,10 @@ class OpNode(Node):
 class AssignNode(Node):
     type = '='
 
+
 class AssignRoutineNode(AssignNode):
     pass
+
 
 class MethodNode(Node):
     type = 'method'
@@ -81,6 +85,7 @@ class MethodNode(Node):
     def __repr__(self):
         return "method " + self.method
 
+
 class FunctionNode(Node):
     type = 'function'
 
@@ -91,14 +96,18 @@ class FunctionNode(Node):
     def __repr__(self):
         return "function " + self.f
 
+
 class ArgumentNode(Node):
     type = 'arguments'
+
 
 class WhileNode(Node):
     type = 'while'
 
+
 class IfNode(Node):
     type = 'if'
+
 
 class IfElseNode(Node):
     type = 'ifelse'

@@ -1,16 +1,22 @@
-title("hello")
-size(800,600)
+title("Welcome to SVGtarien")
+size(800,300)
 
-width(5)
-fill("none")
+fill("grey")
 
-pos(200,200)
-move(100,100)
-move(0,-100)
-move(100,0)
-stroke("red")
-line()
+pos(50,50)
+font(45, "Sans-serif")
+text("Welcome to SVGtarien !")
 
-move(-50,-100)
-stroke("blue")
-line(2)
+move(0,50)
+font(25)
+text("Usage :")
+
+move(0,35)
+font(25,"Courier, monospace")
+text("python interpreter.py ./path/to/yourcode.txt")
+
+move(0,50)
+text("Learn more on the github page :")
+
+move(0,35)
+text("<a href='https://github.com/j4kim/SVGtarien'>github.com/j4kim/SVGtarien</a>")

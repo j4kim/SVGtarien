@@ -20,6 +20,9 @@ operations = {
     '>':  lambda x,y: x > y,
     '>=': lambda x,y: x >= y,
 }
+
+# ce dictionnaire contiendra les variables "$var" -> valeur
+# mais aussi les routines "maRoutine" -> objet CallRoutineNode
 vars = {}
 
 
@@ -42,12 +45,14 @@ def execute(self):
     else:
         methodToCall()
 
+
 @addToClass(AST.FunctionNode)
 def execute(self):
     def rand(args=None):
         if not args:
             return random.random()
         else:
+            # l'astérisque permet d'exploser la liste en 1 ou 2 arguments
             return random.randrange(*args)
 
     sin = lambda args: math.sin(args[0])
@@ -59,8 +64,10 @@ def execute(self):
 
     debug = lambda args: print(*args)
 
+    # locals() retourne un dictionnaire sur les variables locales (donc les fonctions et lambdas définies ci-dessus)
     funcToCall = locals()[self.f]
     if self.children:
+        # le premier enfant contient un ArgumentNode, son execution retourne la liste des valeurs des arguments
         result = funcToCall(self.children[0].execute())
         return result
     return funcToCall()
@@ -71,10 +78,12 @@ def execute(self):
     while self.children[0].execute():
         self.children[1].execute()
 
+
 @addToClass(AST.IfNode)
 def execute(self):
     if self.children[0].execute():
         self.children[1].execute()
+
 
 @addToClass(AST.IfElseNode)
 def execute(self):
@@ -105,11 +114,18 @@ def execute(self):
 
 @addToClass(AST.AssignNode)
 def execute(self):
+    # self.children[0] est un VariableNode
+    # self.children[1] est une expression (par exemple un TokenNode), execute() retourne sa valeur
     vars[self.children[0].name] = self.children[1].execute()
+
 
 @addToClass(AST.AssignRoutineNode)
 def execute(self):
+    # lors de l'assignation d'une routine, on ne peut pas executer directement de deuxième enfant, il faudra
+    # l'exécuté lors de l'appel d'une routine, on sauvegarde donc le ProgramNode,
+    # celui ci sera executé dans le CallRoutineNode
     vars[self.children[0].name] = self.children[1]
+
 
 @addToClass(AST.VariableNode)
 def execute(self):

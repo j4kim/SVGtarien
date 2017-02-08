@@ -1,18 +1,20 @@
 import ply.lex as lex
 
+# les méthodes modifient le fichier SVG
 methods = (
-    'pos', 'move', 'clean',
-    'size', 'title', 'desc',
-    'fill', 'nofill', 'stroke', 'nostroke', 'width', 'font',
-    'rotate', 'scale', 'notransform',
-    'rect', 'line', 'ellipse', 'text', 'bezier'
+    'pos', 'move', 'clean',  # modification de l'historique de position
+    'size', 'title', 'desc', # modification d'attributs de la racine de l'arbre SVG
+    'fill', 'nofill', 'stroke', 'nostroke', 'width', 'font', # modif les attributs de dessin
+    'rotate', 'scale', 'notransform', # modif de l'attribut transform
+    'rect', 'line', 'ellipse', 'text', 'bezier' # dessin d'un nouvel élément
 )
 
+# les fonctions retournent des valeurs (sauf debug) elles n'affectent pas le svg
 functions = {
-    'sin','cos','tan',
-    's','i',
-    'rand',
-    'debug'
+    'sin','cos','tan', # fonctions trigonométriques
+    's','i',           # foncitons de conversions
+    'rand',            # génération de nombres pseudo-aléatoires
+    'debug'            # print des valeurs dans la console
 }
 
 structures = {
@@ -34,23 +36,27 @@ t_MOD_OP = r'%'
 t_CONDITION_OP = r'==|!=|<=|>=|<|>'
 t_VARIABLE = r'\$[A-Za-z_]\w*'
 
+
 def t_NUMBER(t):
     r'\d+(\.\d+)?'
     try:
         t.value = float(t.value)
     except ValueError:
-        print("Line %d: Problem while parsing %s!" % (t.lineno, t.value))
+        print("Line {}: Problem while parsing {}!".format(t.lineno, t.value))
         t.value = 0
     return t
+
 
 def t_STRING(t):
     r'\".*?\"'
     t.value = t.value[1:-1] # [1:-1] enlève les guillemets de la string
     return t
 
+
 def t_COMMENT(t):
     r'[#].*'
-    pass
+    pass # on ne fait rien des commentaires, ils sont mis à la poubelle
+
 
 def t_RESERVEDWORDS(t):
     r'[A-Za-z_]\w*'
@@ -61,17 +67,20 @@ def t_RESERVEDWORDS(t):
     elif t.value in structures:
         t.type = t.value.upper()
     else:
-        t.type = "ROUTINE"
+        t.type = "ROUTINE" # si le mot n'est pas connu, on considère que c'est une routine
     return t
+
 
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
+
 t_ignore = ' \t'
 
+
 def t_error(t):
-    print("Illegal character '%s'" % repr(t.value[0]))
+    print("Illegal character '{}'".format(repr(t.value[0])))
     t.lexer.skip(1)
 
 lex.lex()
@@ -91,4 +100,4 @@ if __name__ == "__main__":
     while 1:
         tok = lex.token()
         if not tok: break
-        print("line %d: %s(%s)" % (tok.lineno, tok.type, tok.value))
+        print("line {}: {}({})".format(tok.lineno, tok.type, tok.value))
