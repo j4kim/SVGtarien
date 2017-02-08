@@ -52,9 +52,12 @@ def execute(self):
 
     sin = lambda args: math.sin(args[0])
     cos = lambda args: math.cos(args[0])
+    tan = lambda args: math.tan(args[0])
 
     s = lambda args: str(args[0])
     i = lambda args: int(args[0])
+
+    debug = lambda args: print(*args)
 
     funcToCall = locals()[self.f]
     if self.children:
@@ -147,5 +150,5 @@ if __name__ == "__main__":
     ast.execute()
     svg.finish()
 
-    with open('output.svg', 'w') as f:
+    with open(filename+'.svg', 'w') as f:
         f.write(svg.svg)

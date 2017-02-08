@@ -19,6 +19,7 @@ def p_programme_recursive(p):
 def p_statement(p):
     ''' statement : method
         | routine
+        | function
 		| assignation
 		| structure'''
     p[0] = p[1]

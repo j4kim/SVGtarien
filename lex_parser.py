@@ -11,7 +11,8 @@ methods = (
 functions = {
     'sin','cos','tan',
     's','i',
-    'rand'
+    'rand',
+    'debug'
 }
 
 structures = {
