@@ -3,12 +3,13 @@ Revolutionnary progamming language and compiler for [SVG](https://en.wikipedia.o
 The compiler is made in Python 3 and uses [ply](http://www.dabeaz.com/ply/ply.html) (Python [Lex](https://en.wikipedia.org/wiki/Lex_(software)) and [Yacc](https://en.wikipedia.org/wiki/Yacc)).
 
 Our language is based on states. Most of the drawing attributes are set globally using specific methods.  
-That means, for example, to draw two circles with the same attributes, you won't write :
+That means, for example, to draw three circles with the same attributes, you won't write :
 ```
-circle(x=20, y=30, radius=10, stroke-width=2, stroke-color='black', fill="red")
-circle(x=80, y=30, radius=10, stroke-width=2, stroke-color='black', fill="red")
+circle(x=20, y=30, radius=10, stroke-width=2, stroke-color="black", fill="red")
+circle(x=80, y=30, radius=10, stroke-width=2, stroke-color="black", fill="red")
+circle(x=100, y=30, radius=10, stroke-width=2, stroke-color="black", fill="red")
 
-# only the x position has changed, but the lines are mostly repetitive -> bad
+# only the x attribute has changed, but the 3 lines are repetitive -> bad
 ```
 
 But you will write :
@@ -20,6 +21,8 @@ fill("red")
 ellipse(10) # draw a circle with previously set attributes
 move(60,0)  # change the position state
 ellipse(20) # draw a circle with previously set attributes, but at the new position
+move(20,0)
+ellipse(20)
 
 # more lines, but no repetitons -> good
 ```
@@ -106,11 +109,11 @@ Output :
 
 ![Attributes example](http://svgshare.com/i/fq.svg)
 
-Shapes are drawn using the currents attributes of the program (state).
+Shapes are drawn using the current attributes (state) of the program.
 The position and size of the shape you draw is defined by the last positions you set.
 Before calling a shape function, like `rect` or `line`, you need to set or move the position pointer 2 times.
 
-The size of the drawing is automatically detect, you can also use the `size(w,h)` method.
+The size of the SVG image is automatically detect, you can also use the `size(w,h)` method to set it.
 
 ### Rectangles
 
@@ -134,7 +137,7 @@ rect(150)
 
 ### Lines
 
-By default, the `line` method draws a polyline passing through all postitions in history. You can set a parameter to the `line` method that defines the number of points used to draw the line. You can also use the `clean` method to reset the position history.
+By default, the `line` method draws a polyline passing through all postitions in history. However, you can set a parameter to the `line` method that defines the number of points used to draw the line. You can also use the `clean` method to reset the position history.
 
 Input :
 ```
@@ -171,7 +174,7 @@ Draw a 5px radius circle centered in x=30,y=60
 pos(30,60)
 ellipse(5)
 ```
-Draw an ellipse centered in x=30,y=60, with x-radius=5 and y-radius=12
+Draw an ellipse centered in (30,60), with x-radius=5 and y-radius=12
 ```
 pos(30,60)
 ellipse(5,12)
@@ -243,7 +246,7 @@ Output :
 
 ### Transform attributes
 
-Everything you draw can be scaled and rotated.
+Everything you draw can be scaled and rotated. Be aware of that every times you call `rotate` or `scale`, the transformation will be *added* to a list of transformations in the SVG "transform" attribute of the next elements. To avoid that, you may need to remove this attribute using the `notransform` method.
 
 Input :
 ```
@@ -287,7 +290,7 @@ Variables are prefixed with `$`. You can define a variable like this : `$x = 12`
 
 ### Mathematical oprators
 
-You can use these mathematical operators : `+`, `-`, `*`, `/`, `%` (modulo) and `^` (power)
+You can use these mathematical operators : `+`, `-`, `*`, `/`, `%` (modulo) and `^` (power). 
 
 ### Loops
 
@@ -314,7 +317,7 @@ Output :
 ### if else statements
 
 Like in other programming languages. The most common comparison operators are supported : `==`, `!=`, `<`, `>`, `<=` and `>=`.
-You can also pass a value in the condition, everything except `0` is true. `if 1 { #executed } else{ #not executed } 
+You can also pass a value in the condition, everything except `0` is true. `if 1 { #executed } else { #not executed }` 
 
 Input : 
 ```
@@ -341,11 +344,11 @@ Output :
 
 ### Built-in functions
 
-There is a few functions you may need to use :
+There is a few provided functions you may need to use :
 * Trigonometric functions : `sin`, `cos`, `tan` takes a radian angle as parameter
 * Conversion : `s` for string and `i` for integer (by default, all numbers are float)
 * Pseudo-random numbers generator : `rand` accept 0, 1 or 2 parameters
-    * `rand()` returns a floating points number between 0 and 1 (excluded)
+    * `rand()` returns a floating point number between 0 and 1 (excluded)
     * `rand(12)` returns a integer between 0 and 11
     * `rand(-12, 12)` returns a integer between -12 and 11
 * Debugging : the `debug` function may help, it just prints the arguments given values in the console.
@@ -404,7 +407,7 @@ Output :
 
 ### Routines
 
-You can define your own routines. A routine takes no arguments and returns no values. It just may help execute repetitve tasks. Like very variable is global, you can use them to modify the behavior of the routine. Results can also be stored in varibales.
+You can define your own routines. A routine takes no arguments and returns no values. It just may help execute repetitve tasks. Since every variable is global, you can use them to modify the behavior of the routine. Results can also be stored in varibales.
 
 Input :
  
@@ -412,7 +415,7 @@ Input :
 size(870,150)
 
 # define a new routine that draws a smiley using the $color variable.
-# of course $color must be define before calling this routine
+# of course $color must be defined before calling this routine
 drawSmiley = {
     # head
     fill($color)
@@ -424,7 +427,7 @@ drawSmiley = {
     move(-20,10)
     move(40,0)
     line(2)
-    move(-20,-10) # replace cursor in center
+    move(-20,-10) # set cursor back in center
 
     # eyes
     nostroke()
@@ -433,7 +436,7 @@ drawSmiley = {
     ellipse(4,8)
     move(20,0)
     ellipse(4,8)
-    move(-10,10) # replace cursor in center
+    move(-10,10) # set cursor back in center
 }
 
 $color = "yellow"
@@ -459,7 +462,8 @@ Output :
 
 ![Smileys](http://svgshare.com/i/fH.svg)
 
-Here is anothoer exemple featuring a simple console imitation :
+
+Here is another exemple featuring a simple console imitation :
 
 ```
 $w = 870
