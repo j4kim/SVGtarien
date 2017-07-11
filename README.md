@@ -41,6 +41,15 @@ The language provides a few methods for writing elements in the SVG file and for
 
 See examples below to learn more about the language.
 
+# Requirements
+
+* Python 3
+* [ply](http://www.dabeaz.com/ply/ply.html) : `pip install ply`
+
+# Usage
+
+    python svgtarien.py path/to/yourcode.txt
+
 # Examples
 
 ## Simple example

@@ -13,7 +13,7 @@ text("Usage :")
 
 move(0,35)
 font(25,"Courier, monospace")
-text("python interpreter.py ./path/to/yourcode.txt")
+text("python svgtarien.py path/to/yourcode.txt")
 
 move(0,50)
 text("Learn more on the github page :")
