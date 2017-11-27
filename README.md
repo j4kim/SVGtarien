@@ -1,3 +1,5 @@
+![Example 1](https://cdn.rawgit.com/j4kim/SVGtarien/65318ff2/exemples/ronds.txt.svg)
+
 # SVGtarien
 Revolutionnary progamming language and compiler for [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics) images generation.  
 The compiler is made in Python 3 and uses [ply](http://www.dabeaz.com/ply/ply.html) (Python [Lex](https://en.wikipedia.org/wiki/Lex_(software)) and [Yacc](https://en.wikipedia.org/wiki/Yacc)).
