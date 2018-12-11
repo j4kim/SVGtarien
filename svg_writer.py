@@ -83,6 +83,15 @@ class SvgWriter:
         except:
             print("Vous devez définir trois points avant d'appeler la méthode bezier")
 
+    @classmethod
+    def path(cls, args):
+        # cls.translate([cls.x[-1], cls.y[-1]])
+        cls.write('    <path d="{2}" {3} />'.format(
+            cls.x[-1], cls.y[-1],
+            args[0],
+            cls.options
+        ))
+
     #
     # move cursor
     #
@@ -166,9 +175,14 @@ class SvgWriter:
     #
 
     @classmethod
-    def rotate(cls, arg):
-        cls.options.append("transform", "rotate({} {},{})".format(arg[0], cls.x[-1], cls.y[-1]))
-
+    def rotate(cls, args):
+        try:
+            cx = args[1]
+            cy = args[2]
+        except:
+            cx = cls.x[-1]
+            cy = cls.y[-1]
+        cls.options.append("transform", "rotate({} {} {})".format(args[0], cx, cy))
 
     @classmethod
     def scale(cls, args):
@@ -176,6 +190,14 @@ class SvgWriter:
         try: sy= args[1]
         except: sy= sx
         cls.options.append("transform", "scale({} {})".format(sx, sy))
+
+
+    @classmethod
+    def translate(cls, args):
+        dx = args[0]
+        try: dy= args[1]
+        except: dy= 0
+        cls.options.append("transform", "translate({} {})".format(dx, dy))
 
 
     @classmethod

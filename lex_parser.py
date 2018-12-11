@@ -5,8 +5,8 @@ methods = (
     'pos', 'move', 'clean',  # modification de l'historique de position
     'size', 'title', 'desc', # modification d'attributs de la racine de l'arbre SVG
     'fill', 'nofill', 'stroke', 'nostroke', 'width', 'font', # modif les attributs de dessin
-    'rotate', 'scale', 'notransform', # modif de l'attribut transform
-    'rect', 'line', 'ellipse', 'text', 'bezier' # dessin d'un nouvel élément
+    'rotate', 'scale', 'translate', 'notransform', # modif de l'attribut transform
+    'rect', 'line', 'ellipse', 'text', 'bezier', 'path' # dessin d'un nouvel élément
 )
 
 # les fonctions retournent des valeurs (sauf debug) elles n'affectent pas le svg

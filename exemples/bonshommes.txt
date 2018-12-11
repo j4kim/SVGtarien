@@ -1,0 +1,32 @@
+title("des triangles")
+
+$path = "M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"
+
+pos(0,0)
+pos(600,400)
+rect()
+
+$x = 600
+while ($x > 0) {
+    $y = rand(400)
+
+    $r = rand(0, 100)
+    $g = rand(50, 255)
+    $b = rand(0, 100)
+    $rot = rand(180)
+    $a = 1
+    if ($y < 150) {
+        $a = $y/150
+    }
+    if ($y > 250) {
+        $a = (400 - $y)/150
+    }
+
+    notransform()
+    translate($x,$y)
+    rotate($rot, 0,0)
+    fill($r,$g,$b, $a)
+    path($path)
+
+    $x = $x - 0.3
+}
