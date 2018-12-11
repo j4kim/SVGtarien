@@ -1,4 +1,4 @@
-![Example 1](https://cdn.rawgit.com/j4kim/SVGtarien/65318ff2/exemples/ronds.txt.svg)
+![Example 1](https://cdn.jsdelivr.net/gh/j4kim/SVGtarien@65318ff2434b404a925424c6daaa730591d0549e/exemples/ronds.txt.svg)
 
 # SVGtarien
 Revolutionnary progamming language and compiler for [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics) images generation.  
