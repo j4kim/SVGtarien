@@ -6,7 +6,7 @@ The compiler is made in Python 3 and uses [ply](http://www.dabeaz.com/ply/ply.ht
 
 Our language is based on states. Most of the drawing attributes are set globally using specific methods.  
 That means, for example, to draw three circles with the same attributes, you won't write :
-```
+```py
 circle(x=20, y=30, radius=10, stroke-width=2, stroke-color="black", fill="red")
 circle(x=80, y=30, radius=10, stroke-width=2, stroke-color="black", fill="red")
 circle(x=100, y=30, radius=10, stroke-width=2, stroke-color="black", fill="red")
@@ -15,7 +15,7 @@ circle(x=100, y=30, radius=10, stroke-width=2, stroke-color="black", fill="red")
 ```
 
 But you will write :
-```
+```py
 pos(20,30)
 width(2)
 stroke("black")
@@ -57,7 +57,7 @@ See examples below to learn more about the language.
 ## Simple example
 
 Input :
-```
+```py
 title("Exemple simple de figure SVG")
 desc("Cette figure est constituée d'un rectangle, d'un segment de droite et d'un cercle.")
 
@@ -102,7 +102,7 @@ Output image :
 ### Setting state attributes
 
 Input :
-```
+```py
 pos(100,50)               # set postion cursor at x=100 and y=50
 fill("red")               # set the fill color of next elements to red
 stroke("#ffff00")         # set the stroke color of next elements to yellow using hexadecimal notation
@@ -131,7 +131,7 @@ The size of the SVG image is automatically detect, you can also use the `size(w,
 The `rect` method accepts 0, 1 or 2 parameters. If no parameters is passed, the rectangle is drawn using the two last positions in the history.
 
 Input :
-```
+```py
 size(300, 150)  # fix the image size
 
 pos(20,20)
@@ -155,7 +155,7 @@ Output :
 The `ellipse` method accepts 1 or 2 paramters. An ellipse with one parameter is a circle.
 
 Input :
-```
+```py
 size(300, 150)  # fix the image size
 
 pos(150,75)     # postition at the center
@@ -176,7 +176,7 @@ Output :
 By default, the `line` method draws a polyline passing through all postitions in history. However, you can pass a parameter to the `line` method that defines the number of points used to draw the line. You can also use the `clean` method to reset the position history.
 
 Input :
-```
+```py
 fill("none")      # by default, polylines are filled, you must set this if you juste want lines
 stroke("black")   # you must also define a stroke color, otherwise you won't see anything
 width(10)         # set the stroke-width attribute
@@ -208,7 +208,7 @@ Output :
 The `bezier` method allows you to draw [quardatic bezier curves](https://upload.wikimedia.org/wikipedia/commons/3/3d/B%C3%A9zier_2_big.gif) using the 3 last points in history.
 
 Input :
-```
+```py
 size(300,150)   # fix the image size
 
 fill("red")
@@ -240,7 +240,7 @@ You can add a parameter to the `bezier` method if you want the curve to be close
 You can customise texts using the `font` method. The first argument is the new font size. The optionnal second argument is a CSS font family name like `Times` or `Helvetica` or a generic name like `serif`, `monospace` etc... (see [font-family](https://developer.mozilla.org/fr/docs/Web/CSS/font-family) on the MDN).
 
 Input :  
-```
+```py
 size(870,150)
 
 pos(20,20)
@@ -272,7 +272,7 @@ Output :
 Everything you draw can be scaled and rotated. Be aware of that every times you call `rotate` or `scale`, the transformation will be *added* to a list of transformations in the SVG "transform" attribute of the next elements. To avoid that, you may need to remove this attribute using the `notransform` method.
 
 Input :
-```
+```py
 size(400,150)
 
 # black text
@@ -320,7 +320,7 @@ You can use these mathematical operators : `+`, `-`, `*`, `/`, `%` (modulo) and 
 You can loop using the `while` statement.
 
 Draw 10 circles of radius 20, spaced by 80 pixels :
-```
+```py
 size(870,150)
 
 pos(0, 75)
@@ -343,7 +343,7 @@ Similar to other programming languages. The most common comparison operators are
 You can also pass a value in the condition, everything except `0` is true. `if 1 { #executed } else { #not executed }` 
 
 Input : 
-```
+```py
 size(870,150)
 
 $x = 10
@@ -377,7 +377,7 @@ There is a few provided functions you may need to use :
 * Debugging : the `debug` function may help, it just prints the given arguments values in the console.
 
 Example using `sin`, `s` and `debug` :
-```
+```py
 $w = 870
 $h = 150
 size($w,$h)
@@ -403,7 +403,7 @@ Output :
 ![sinus](http://svgshare.com/i/gq.svg)
 
 Example using `rand` and `i` :
-```
+```py
 $w = 870
 $h = 150
 size($w,$h)
@@ -434,7 +434,7 @@ You can define your own routines. A routine takes no arguments and returns no va
 
 Input :
  
-```
+```py
 size(870,150)
 
 # define a new routine that draws a smiley using the $color variable.
@@ -488,7 +488,7 @@ Output :
 
 Here is another routine exemple featuring a simple console imitation :
 
-```
+```py
 $w = 870
 $h = 150
 size($w,$h)
