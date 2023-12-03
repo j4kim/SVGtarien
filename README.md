@@ -1,17 +1,17 @@
 ![Example 1](https://cdn.jsdelivr.net/gh/j4kim/SVGtarien@65318ff2434b404a925424c6daaa730591d0549e/exemples/ronds.txt.svg)
 
 # SVGtarien
-Revolutionnary progamming language and compiler for [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics) images generation.  
-The compiler is made in Python 3 and uses [ply](http://www.dabeaz.com/ply/ply.html) (Python [Lex](https://en.wikipedia.org/wiki/Lex_(software)) and [Yacc](https://en.wikipedia.org/wiki/Yacc)).
+A simple progamming language and compiler for [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics) images generation.  
+The compiler is made in Python 3 using [ply](http://www.dabeaz.com/ply/ply.html) (Python [Lex](https://en.wikipedia.org/wiki/Lex_(software)) and [Yacc](https://en.wikipedia.org/wiki/Yacc)).
 
-Our language is based on states. Most of the drawing attributes are set globally using specific methods.  
-That means, for example, to draw three circles with the same attributes, you won't write :
+The language is based on states. Most of the drawing attributes are set globally using functions.  
+For example, to draw three circles with the same attributes, you won't write :
 ```py
 circle(x=20, y=30, radius=10, stroke-width=2, stroke-color="black", fill="red")
 circle(x=80, y=30, radius=10, stroke-width=2, stroke-color="black", fill="red")
 circle(x=100, y=30, radius=10, stroke-width=2, stroke-color="black", fill="red")
 
-# only the x attribute has changed, but the 3 lines are repetitive -> bad
+# only the x attribute has changed, but the 3 lines are repetitive
 ```
 
 But you will write :
@@ -26,19 +26,17 @@ ellipse(20) # draw a circle with previously set attributes, but at the new posit
 move(20,0)
 ellipse(20)
 
-# more lines, but less repetitons -> good
+# more lines, but less repetitons
 ```
 
-By doing so, we aim to simplify SVG images generation avoiding its verbosity.  
-
-The language provides a few methods for writing elements in the SVG file and for changing the attributes of those elements.  
-* Drawing methods
+The language provides a few functions for writing elements in the SVG file and for changing the attributes of those elements.  
+* Drawing functions:
     * `rect`, `line`, `ellipse`, `text`, `bezier`
-* Attributes modification methods :
+* Attributes modification functions:
     * `fill`, `nofill`, `stroke`, `nostroke`, `width`, `font`, `rotate`, `scale`, `notransform`
-* Position state methods :
+* Position state functions:
     * `pos`, `move`, `clean`
-* Special methods :
+* Special functions:
     * `size`, `title`, `desc`
 
 See examples below to learn more about the language.
@@ -124,11 +122,11 @@ Shapes are drawn using the current attributes (state) of the program.
 The position and size of the shape you draw is defined by the last positions you set.
 Before calling a shape function, like `rect` or `line`, you need to set or move the position pointer 2 times.
 
-The size of the SVG image is automatically detect, you can also use the `size(w,h)` method to fix it.
+The size of the SVG image is automatically detect, you can also use the `size(w,h)` function to fix it.
 
 ### Squares and Rectangles
 
-The `rect` method accepts 0, 1 or 2 parameters. If no parameters is passed, the rectangle is drawn using the two last positions in the history.
+The `rect` function accepts 0, 1 or 2 parameters. If no parameters is passed, the rectangle is drawn using the two last positions in the history.
 
 Input :
 ```py
@@ -152,7 +150,7 @@ Output :
 
 ### Circles and ellipses
 
-The `ellipse` method accepts 1 or 2 paramters. An ellipse with one parameter is a circle.
+The `ellipse` function accepts 1 or 2 paramters. An ellipse with one parameter is a circle.
 
 Input :
 ```py
@@ -173,7 +171,7 @@ Output :
 
 ### Lines
 
-By default, the `line` method draws a polyline passing through all postitions in history. However, you can pass a parameter to the `line` method that defines the number of points used to draw the line. You can also use the `clean` method to reset the position history.
+By default, the `line` function draws a polyline passing through all postitions in history. However, you can pass a parameter to the `line` function that defines the number of points used to draw the line. You can also use the `clean` function to reset the position history.
 
 Input :
 ```py
@@ -205,7 +203,7 @@ Output :
 
 ### Bézier curves
 
-The `bezier` method allows you to draw [quardatic bezier curves](https://upload.wikimedia.org/wikipedia/commons/3/3d/B%C3%A9zier_2_big.gif) using the 3 last points in history.
+The `bezier` function allows you to draw [quardatic bezier curves](https://upload.wikimedia.org/wikipedia/commons/3/3d/B%C3%A9zier_2_big.gif) using the 3 last points in history.
 
 Input :
 ```py
@@ -231,13 +229,13 @@ Output :
 
 ![Bezier](http://svgshare.com/i/gp.svg)
 
-You can add a parameter to the `bezier` method if you want the curve to be closed : `bezier(1)` :
+You can add a parameter to the `bezier` function if you want the curve to be closed : `bezier(1)` :
 
 ![Closed bezier](http://svgshare.com/i/g8.svg)
 
 ### Text
 
-You can customise texts using the `font` method. The first argument is the new font size. The optionnal second argument is a CSS font family name like `Times` or `Helvetica` or a generic name like `serif`, `monospace` etc... (see [font-family](https://developer.mozilla.org/fr/docs/Web/CSS/font-family) on the MDN).
+You can customise texts using the `font` function. The first argument is the new font size. The optionnal second argument is a CSS font family name like `Times` or `Helvetica` or a generic name like `serif`, `monospace` etc... (see [font-family](https://developer.mozilla.org/fr/docs/Web/CSS/font-family) on the MDN).
 
 Input :  
 ```py
@@ -269,7 +267,7 @@ Output :
 
 ### Transform attributes
 
-Everything you draw can be scaled and rotated. Be aware of that every times you call `rotate` or `scale`, the transformation will be *added* to a list of transformations in the SVG "transform" attribute of the next elements. To avoid that, you may need to remove this attribute using the `notransform` method.
+Everything you draw can be scaled and rotated. Be aware of that every times you call `rotate` or `scale`, the transformation will be *added* to a list of transformations in the SVG "transform" attribute of the next elements. To avoid that, you may need to remove this attribute using the `notransform` function.
 
 Input :
 ```py
